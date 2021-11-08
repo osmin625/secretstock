@@ -25,6 +25,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주식차트 들어갈 곳"
+                    android:textSize="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="300dp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -32,6 +40,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <Button
+                    android:id="@+id/addstock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="종목 추가"
+                    android:layout_marginTop="550dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#cccccc"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"/>
             </LinearLayout>
 
             <LinearLayout
