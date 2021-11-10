@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamProject">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+        <activity android:name=".Loding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
         </activity>
         <activity android:name=".Regist" android:label="회원가입"/>
         <activity android:name=".Menu" android:label="메뉴"/>
