@@ -18,16 +18,20 @@ class Regist : AppCompatActivity(){
         var isPWSame = false
 
         var btn_reg = findViewById<Button>(R.id.btn_reg)
+        var regName = findViewById<EditText>(R.id.regName)
         var regId = findViewById<EditText>(R.id.regId)
         var regPass = findViewById<EditText>(R.id.regPass)
         var regPassCheck = findViewById<EditText>(R.id.regPassCheck)
 
+
         btn_reg.setOnClickListener {
+            val name = regName.text.toString()
             val id = regId.text.toString()
             val pw = regPass.text.toString()
             val pw_ck = regPassCheck.text.toString()
 
-            if(id.isEmpty() || pw.isEmpty() || pw_ck.isEmpty()){
+
+            if(id.isEmpty() || pw.isEmpty() || pw_ck.isEmpty() || name.isEmpty()){
                 isExistBlank = true
             }
             else{
@@ -44,6 +48,7 @@ class Regist : AppCompatActivity(){
                 val editor = sharedPreference.edit()
                 editor.putString("id",id)
                 editor.putString("pw",pw)
+                editor.putString("name", name)
                 editor.apply()
 
                 val intent = Intent(this, MainActivity::class.java)
