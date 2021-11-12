@@ -30,6 +30,10 @@ class Menu : TabActivity() {
         tabSpecSetting.setContent(R.id.Setting)
         tabHost.addTab(tabSpecSetting)
 
+        var tabSpecTemp = tabHost.newTabSpec("temp").setIndicator("temp")
+        tabSpecTemp.setContent(R.id.temp)
+        tabHost.addTab(tabSpecTemp)
+
         tabHost.currentTab = 0
     }
 }
