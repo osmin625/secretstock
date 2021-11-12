@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 
-class Loding : Activity() {
+class Loading : Activity() {
 
     private  val SPLASH_TIME_OUT:Long = 3000
     override fun onCreate(savedInstanceState: Bundle?) {
