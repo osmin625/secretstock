@@ -37,6 +37,10 @@ class Menu : TabActivity() {
 
         var tabHost = this.tabHost
 
+        var tabSpecTemp = tabHost.newTabSpec("temp").setIndicator("temp")
+        tabSpecTemp.setContent(R.id.temp)
+        tabHost.addTab(tabSpecTemp)
+
         var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("차트")
         tabSpecChart.setContent(R.id.Chart)
         tabHost.addTab(tabSpecChart)
@@ -52,10 +56,6 @@ class Menu : TabActivity() {
         var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("설정")
         tabSpecSetting.setContent(R.id.Setting)
         tabHost.addTab(tabSpecSetting)
-
-        var tabSpecTemp = tabHost.newTabSpec("temp").setIndicator("temp")
-        tabSpecTemp.setContent(R.id.temp)
-        tabHost.addTab(tabSpecTemp)
 
         tabHost.currentTab = 0
 
