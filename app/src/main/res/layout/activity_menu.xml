@@ -25,13 +25,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="주식차트 들어갈 곳"
+                    android:text="내 주식들"
                     android:textSize="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="300dp"/>
+                    android:layout_marginTop="30dp"/>
+
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/barChart"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="50dp"
+                    android:layout_weight="1"
+                    />
+
 
             </LinearLayout>
 
