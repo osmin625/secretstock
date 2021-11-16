@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.getValue
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,23 +24,25 @@ class MainActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             var id = idedt1.text.toString()
             var pw = idedt2.text.toString()
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference()
+            var value = ""
+            myRef.child("user").child(id).get().addOnSuccessListener {
+                value = it.child("password").value.toString()
+                if(pw == value){
+                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
-            val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
-            val savedId = sharedPreference.getString("id","")
-            val savedPw = sharedPreference.getString("pw","")
+                    val intentMenu = Intent(this, Menu::class.java)
+                    startActivity(intentMenu)
 
-            if(id == savedId && pw == savedPw){
-                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-
-                val intentMenu = Intent(this, Menu::class.java)
-                startActivity(intentMenu)
+                }
+                else{
+                    Toast.makeText(this, "비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener{
+                Toast.makeText(this, "아이디가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
 
             }
-            else{
-                Toast.makeText(this, "로그인 실패",Toast.LENGTH_SHORT).show()
-            }
-
-
         }
 
         btnSign.setOnClickListener {

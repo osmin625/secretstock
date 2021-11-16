@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class Regist : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +26,19 @@ class Regist : AppCompatActivity(){
         var regPass = findViewById<EditText>(R.id.regPass)
         var regPassCheck = findViewById<EditText>(R.id.regPassCheck)
 
-
         btn_reg.setOnClickListener {
             val name = regName.text.toString()
             val id = regId.text.toString()
             val pw = regPass.text.toString()
             val pw_ck = regPassCheck.text.toString()
+            var startStock = ArrayList<Stock>(20)
+            var currentStock = ArrayList<Stock>(20)
+            var stockChange = ArrayList<Int>(20)
+            for (i in 0..20) {
+                startStock.add(Stock())
+                currentStock.add(Stock())
+                stockChange.add(0)
+            }
 
 
             if(id.isEmpty() || pw.isEmpty() || pw_ck.isEmpty() || name.isEmpty()){
@@ -43,13 +53,12 @@ class Regist : AppCompatActivity(){
 
             if(!isExistBlank && isPWSame){
                 Toast.makeText(this, "회원가입 성공",Toast.LENGTH_SHORT).show()
-
-                val sharedPreference = getSharedPreferences("file name",Context.MODE_PRIVATE)
-                val editor = sharedPreference.edit()
-                editor.putString("id",id)
-                editor.putString("pw",pw)
-                editor.putString("name", name)
-                editor.apply()
+                var user : User  = User(
+                    name, id, pw, startStock, currentStock, stockChange
+                )
+                val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference("user")
+                myRef.child(id).setValue(user)
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

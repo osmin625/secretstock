@@ -1,27 +1,31 @@
 package com.example.teamproject;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
 public class User {
     private String name;
     private String Id;
     private String password;
-    private Stock[] startStock;
-    private Stock[] currentStock;
-    private int[] stockChange;
+    private ArrayList<Stock> startStock;
+    private ArrayList<Stock> currentStock;
+    private ArrayList<Integer> stockChange;
     private int stockNumber;
     private int changeNum;
 
-    public User(String name, String Id, String password){
+    public User(@NotNull String name, @NotNull String Id, @NotNull String password, @NotNull ArrayList<Stock> startStock, @NotNull ArrayList<Stock> currentStock, @NotNull ArrayList<Integer> stockChange) {
         this.name = name;
         this.Id = Id;
         this.password = password;
-        this.startStock = new Stock[20];
-        this.currentStock = new Stock[20];
-        this.stockChange = new int[365];
+        this.startStock = startStock;
+        this.currentStock = currentStock;
+        this.stockChange = stockChange;
         this.stockNumber = 0;
         this.changeNum = 0;
     }
 
-    public String getName() {
+    public String getname() {
         return this.name;
     }
     public String getId(){
@@ -30,16 +34,18 @@ public class User {
     public String getPassword(){
         return this.password;
     }
-    public Stock[] getStartStock(){
+    public ArrayList<Stock>getStartStock(){
         return startStock;
     }
-    public Stock[] getCurrentStock(){
+    public ArrayList<Stock> getCurrentStock(){
         return currentStock;
     }
-    public int[] getStockChange(){
+    public ArrayList<Integer> getStockChange(){
         return stockChange;
     }
-    public void setName(String s){
+    public int getStockNumber(){return stockNumber;}
+    public int getChangeNum(){return changeNum;}
+    public void setname(String s){
        this.name = s;
     }
     public void setId(String s){
@@ -49,11 +55,13 @@ public class User {
         this.password = s;
     }
     public void setStock(Stock temp){
-        this.startStock[stockNumber] = temp;
-        this.currentStock[stockNumber] = temp;
+        this.startStock.set(stockNumber, temp);
+        this.currentStock.set(stockNumber, temp);
         stockNumber++;
     }
     public void setChange(int temp){
-        stockChange[changeNum++] = temp;
+        stockChange.set(changeNum++, temp);
     }
+    public void setstockNumber(int temp){stockNumber = temp;}
+    public void setChangeNum(int temp){stockNumber = temp;}
 }
