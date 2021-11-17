@@ -28,16 +28,21 @@ class MainActivity : AppCompatActivity() {
             val myRef = database.getReference()
             var value = ""
             myRef.child("user").child(id).get().addOnSuccessListener {
+                var tempId = it.child("id").value.toString()
                 value = it.child("password").value.toString()
-                if(pw == value){
-                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-
-                    val intentMenu = Intent(this, Menu::class.java)
-                    startActivity(intentMenu)
-
+                if(tempId != id){
+                    Toast.makeText(this, "아이디가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
                 }
-                else{
-                    Toast.makeText(this, "비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
+                else {
+                    if (pw == value) {
+                        Toast.makeText(this, "${tempId}로그인 성공", Toast.LENGTH_SHORT).show()
+
+                        val intentMenu = Intent(this, Menu::class.java)
+                        startActivity(intentMenu)
+
+                    } else {
+                        Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }.addOnFailureListener{
                 Toast.makeText(this, "아이디가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
