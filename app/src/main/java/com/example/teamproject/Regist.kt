@@ -25,6 +25,7 @@ class Regist : AppCompatActivity(){
         var regId = findViewById<EditText>(R.id.regId)
         var regPass = findViewById<EditText>(R.id.regPass)
         var regPassCheck = findViewById<EditText>(R.id.regPassCheck)
+        var CheckOverlap = findViewById<Button>(R.id.checkOverlap)
 
         btn_reg.setOnClickListener {
             val name = regName.text.toString()
