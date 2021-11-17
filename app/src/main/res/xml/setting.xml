@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="배경화면 설정">
+        <SwitchPreference
+            android:key="vibrate"
+            android:summaryOff="배경화면 변경시 진동알림 설정 안함"
+            android:summaryOn="배경화면 변경시 진동알림 설정"
+            android:title="진동알림" />
+        <SwitchPreference
+            android:key="message"
+            android:summary="배경화면 변경시 소리알림 설정"
+            android:title="소리 알림" />
+
+        <PreferenceScreen
+            android:title="배경화면 추가"
+            android:summary="갤러리에서 선택">
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:title="배경화면 반영 간격"
+            android:summary="1시간">
+        </PreferenceScreen>
+
+        <!-- Single Choice : RadioButton -->
+        <ListPreference
+            android:entries="@array/wallpapers"
+            android:entryValues="@array/wallpapers"
+            android:key="sound"
+            android:title="배경화면 설정" />
+        <!-- entries : 리스트에 표시되는 항목글씨-->
+        <!-- entryValues : 파일에 저장되는 값 -->
+
+        <!-- Multiple Choice : Checkbox-->
+        <ListPreference
+            android:entries="@array/favors"
+            android:entryValues="@array/favors"
+            android:key="favor"
+            android:summary="pm 12 : 00"
+            android:title="배경화면 반영 시간" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="프리미엄 설정">
+        <PreferenceScreen
+            android:title="구독">
+            <SwitchPreference
+                android:key="premium"
+                android:summaryOff="현재 무료버전 사용중"
+                android:summaryOn="현재 프리미엄버전 사용중"
+                android:title="구독 여부" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:title="정기결제 설정">
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="기타 설정">
+        <PreferenceScreen
+            android:summary="tmdals179@gmail.com"
+            android:title="계정 관리">
+            <SwitchPreference
+                android:key="account_setting"
+                android:summaryOff="계정 연동되지 않음"
+                android:summaryOn="계정 연동됨"
+                android:title="구글 계정 연동" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:title="앱 정보">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:title="오픈소스 라이선스">
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

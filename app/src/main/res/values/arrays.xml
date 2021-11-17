@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wallpapers">
+        <item>사물</item>
+        <item>풍경</item>
+        <item>원색</item>
+        <item>사용자지정</item>
+    </string-array>
+
+    <string-array name="favors">
+        <item>카톡</item>
+        <item>카톡왔숑</item>
+        <item>카톡카톡</item>
+        <item>카카오톡</item>
+    </string-array>
+</resources>
