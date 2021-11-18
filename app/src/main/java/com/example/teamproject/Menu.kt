@@ -34,7 +34,7 @@ class Menu : TabActivity() {
         setContentView(R.layout.activity_menu)
 
         var stockList = ArrayList<Stock>()
-        stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
+        var addstockBtn = findViewById<Button>(R.id.addstockBtn)
         stockListView = findViewById<ListView>(R.id.stockList)
         var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
         stockListView.adapter = adapter
@@ -47,30 +47,6 @@ class Menu : TabActivity() {
         entries.add(BarEntry(5.2f, 70.0f))
         entries.add(BarEntry(6.2f, 30.0f))
         entries.add(BarEntry(7.2f, 90.0f))
-        stockAddBtn.setOnClickListener {
-            dialogView = View.inflate(this@Menu, R.layout.addstock, null)
-            var dlg = AlertDialog.Builder(this@Menu)
-            dlg.setTitle("주식 정보 입력")
-            dlg.setView(dialogView)
-            dlgStockName = dialogView.findViewById<EditText>(R.id.StockName)
-            dlgStockPrice = dialogView.findViewById<EditText>(R.id.StockPrice)
-            dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
-            dlg.setPositiveButton("확인") { dialog, which ->
-                var toast1 = Toast(this@Menu)
-                //temp = Stock(1,dlgStockName,dlgStockPrice,dlgStockCount)
-                toastText.text = "주식 추가 완료"
-                stockList.add(temp)
-                adapter.notifyDataSetChanged()
-                toast1.setGravity(Gravity.CENTER, 0, -800)
-                toast1.show()
-            }
-            dlg.setNegativeButton("취소") { dialog, which ->
-                var toast2 = Toast(this@Menu)
-                toastText.text = "취소"
-                toast2.setGravity(Gravity.CENTER, 0, -800)
-                toast2.show()
-            }
-            dlg.show()
 
             var tabHost = this.tabHost
 
@@ -157,9 +133,36 @@ class Menu : TabActivity() {
                 invalidate()
             }
 
+        addstockBtn.setOnClickListener {
+            dialogView = View.inflate(this@Menu, R.layout.addstock, null)
+            var dlg = AlertDialog.Builder(this@Menu)
+            dlg.setTitle("주식 정보 입력")
+            dlg.setView(dialogView)
+            dlgStockName = dialogView.findViewById<EditText>(R.id.StockName)
+            dlgStockPrice = dialogView.findViewById<EditText>(R.id.StockPrice)
+            dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
+            dlg.setPositiveButton("확인") { dialog, which ->
+                var toast1 = Toast(this@Menu)
+                //temp = Stock(1,dlgStockName,dlgStockPrice,dlgStockCount)
+                toastText.text = "주식 추가 완료"
+                stockList.add(temp)
+                adapter.notifyDataSetChanged()
+                toast1.setGravity(Gravity.CENTER, 0, -800)
+                toast1.show()
+
+            }
+            dlg.setNegativeButton("취소") { dialog, which ->
+                var toast2 = Toast(this@Menu)
+                toastText.text = "취소"
+                toast2.setGravity(Gravity.CENTER, 0, -800)
+                toast2.show()
+            }
+            dlg.show()
+        }
+
 
         }
-    }
+
 
     inner class MyXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
