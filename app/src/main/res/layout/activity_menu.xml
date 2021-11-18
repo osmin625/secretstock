@@ -20,13 +20,33 @@
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+            <LinearLayout
+                android:id="@+id/temp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".MainActivity">
 
+                <ListView
+                    android:id="@+id/stockList"
+                    android:layout_width="match_parent"
+                    android:layout_height="620dp"/>
+                <Button
+                    android:id="@+id/stockAddBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="종목 추가"
+                    android:backgroundTint="#cccccc"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"/>
+
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/Chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -34,8 +54,6 @@
                     android:layout_marginTop="30dp"
                     android:text="내 주식들"
                     android:textSize="30dp" />
-
-
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/barChart"
                     android:layout_width="match_parent"
@@ -44,7 +62,7 @@
                     android:layout_marginTop="50dp"
                     android:layout_marginBottom="50dp"
                     android:layout_weight="1"
-                    tools:ignore="MissingClass" />
+                    tools:ignore="MissingClass"/>
             </LinearLayout>
 
             <LinearLayout
@@ -76,49 +94,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/temp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context=".MainActivity">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/edt_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <EditText
-                            android:id="@+id/edt_sub"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <Button
-                        android:id="@+id/tempadd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="종목 추가"
-                        android:backgroundTint="#cccccc"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"/>
-
-                </LinearLayout>
-
-                <ListView
-                    android:id="@+id/listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
         </FrameLayout>
     </RelativeLayout>
 
