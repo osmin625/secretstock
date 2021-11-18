@@ -27,8 +27,8 @@ class Menu : TabActivity() {
     lateinit var dlgStockCount: EditText
     lateinit var toastText: TextView
     lateinit var dialogView: View
-    lateinit var stockListView : ListView
-    lateinit var temp : Stock
+    lateinit var stockListView: ListView
+    lateinit var temp: Stock
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -36,7 +36,7 @@ class Menu : TabActivity() {
         var stockList = ArrayList<Stock>()
         stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         stockListView = findViewById<ListView>(R.id.stockList)
-        var adapter = ArrayAdapter(this,  android.R.layout.simple_list_item_1, stockList)
+        var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
         stockListView.adapter = adapter
         var barChart: BarChart = findViewById(R.id.barChart)
         val entries = ArrayList<BarEntry>()
@@ -160,6 +160,7 @@ class Menu : TabActivity() {
 
         }
     }
+
     inner class MyXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {

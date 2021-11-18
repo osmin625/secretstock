@@ -2,24 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
+
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            >
-        </TabWidget>
+            android:layout_alignParentBottom="true"></TabWidget>
+
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/temp"
                 android:layout_width="match_parent"
@@ -30,23 +31,26 @@
                 <ListView
                     android:id="@+id/stockList"
                     android:layout_width="match_parent"
-                    android:layout_height="620dp"/>
+                    android:layout_height="610dp" />
+
                 <Button
                     android:id="@+id/stockAddBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="종목 추가"
                     android:backgroundTint="#cccccc"
+                    android:text="종목 추가"
                     android:textColor="@color/black"
-                    android:textSize="25dp"/>
+                    android:textSize="25dp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/Chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,6 +58,7 @@
                     android:layout_marginTop="30dp"
                     android:text="내 주식들"
                     android:textSize="30dp" />
+
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/barChart"
                     android:layout_width="match_parent"
@@ -62,7 +67,7 @@
                     android:layout_marginTop="50dp"
                     android:layout_marginBottom="50dp"
                     android:layout_weight="1"
-                    tools:ignore="MissingClass"/>
+                    tools:ignore="MissingClass" />
             </LinearLayout>
 
             <LinearLayout
@@ -70,30 +75,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <Button
                     android:id="@+id/addstock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="종목 추가"
-                    android:layout_marginTop="550dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="550dp"
                     android:backgroundTint="#cccccc"
+                    android:text="종목 추가"
                     android:textColor="@color/black"
-                    android:textSize="25dp"/>
+                    android:textSize="25dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Wallpaper"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
+
             <LinearLayout
                 android:id="@+id/Setting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
         </FrameLayout>
     </RelativeLayout>
