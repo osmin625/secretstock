@@ -21,29 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/temp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context=".MainActivity">
 
-                <ListView
-                    android:id="@+id/stockList"
-                    android:layout_width="match_parent"
-                    android:layout_height="610dp" />
-
-                <Button
-                    android:id="@+id/stockAddBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#cccccc"
-                    android:text="종목 추가"
-                    android:textColor="@color/black"
-                    android:textSize="25dp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Chart"
@@ -76,12 +54,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <ListView
+                    android:id="@+id/stockList"
+                    android:layout_width="match_parent"
+                    android:layout_height="610dp" />
+
                 <Button
-                    android:id="@+id/addstockBtn"
+                    android:id="@+id/stockAddBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="550dp"
                     android:backgroundTint="#cccccc"
                     android:text="종목 추가"
                     android:textColor="@color/black"
