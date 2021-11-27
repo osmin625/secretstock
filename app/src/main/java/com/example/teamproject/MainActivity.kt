@@ -35,9 +35,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (pw == value) {
-                        Toast.makeText(this, "${tempId}로그인 성공", Toast.LENGTH_SHORT).show()
-
-                        val intentMenu = Intent(this, Menu::class.java)
+                        val name = it.child("name").value.toString()
+                        val startStock = it.child("startStock").value as ArrayList<Stock>
+                        val currentStock = it.child("currentStock").value as ArrayList<Stock>
+                        val stockChange = it.child("stockChange").value as ArrayList<Int>
+                        var user = User(
+                            name, tempId, value, startStock, currentStock, stockChange
+                        )
+                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        var intentMenu = Intent(this, Menu::class.java)
+                        intentMenu.putExtra("user", user)
                         startActivity(intentMenu)
 
                     } else {

@@ -1,6 +1,7 @@
 package com.example.teamproject
 
 import java.util.ArrayList
+import java.io.Serializable
 
 class User(
     private var name: String,
@@ -9,7 +10,7 @@ class User(
     val startStock: ArrayList<Stock>,
     val currentStock: ArrayList<Stock>,
     val stockChange: ArrayList<Int>
-) {
+):Serializable {
     var stockNumber = 0
         private set
     var changeNum = 0
@@ -19,6 +20,9 @@ class User(
 
     fun getname(): String {
         return name
+    }
+    fun getStock(): ArrayList<Stock>{
+        return currentStock
     }
 
     fun setname(s: String) {

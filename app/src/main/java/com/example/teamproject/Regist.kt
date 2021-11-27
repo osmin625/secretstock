@@ -27,6 +27,13 @@ class Regist : AppCompatActivity(){
         var regPassCheck = findViewById<EditText>(R.id.regPassCheck)
         var CheckOverlap = findViewById<Button>(R.id.checkOverlap)
 
+        CheckOverlap.setOnClickListener {
+            var confirmname = regName.text.toString()
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference()
+
+        }
+
         btn_reg.setOnClickListener {
             val name = regName.text.toString()
             val id = regId.text.toString()
@@ -35,12 +42,9 @@ class Regist : AppCompatActivity(){
             var startStock = ArrayList<Stock>(20)
             var currentStock = ArrayList<Stock>(20)
             var stockChange = ArrayList<Int>(20)
-            for (i in 0..20) {
-                startStock.add(Stock())
-                currentStock.add(Stock())
-                stockChange.add(0)
-            }
-
+            startStock.add(Stock())
+            currentStock.add(Stock())
+            stockChange.add(0)
 
             if(id.isEmpty() || pw.isEmpty() || pw_ck.isEmpty() || name.isEmpty()){
                 isExistBlank = true

@@ -2,7 +2,9 @@ package com.example.teamproject
 
 import android.app.AlertDialog
 import android.app.TabActivity
+import android.icu.util.ULocale.getName
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -32,7 +34,9 @@ class Menu : TabActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
-
+        var intent = intent
+        var user = intent.getSerializableExtra("user") as User
+//        Toast.makeText(this, "${user.getStock()}.", Toast.LENGTH_SHORT).show()
         var stockList = ArrayList<Stock>()
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         stockListView = findViewById<ListView>(R.id.stockList)
@@ -143,7 +147,7 @@ class Menu : TabActivity() {
             dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
             dlg.setPositiveButton("확인") { dialog, which ->
                 var toast1 = Toast(this@Menu)
-                //temp = Stock(1,dlgStockName,dlgStockPrice,dlgStockCount)
+                temp = Stock("hello",dlgStockName.text.toString(),Integer.parseInt(dlgStockPrice.text.toString()),Integer.parseInt(dlgStockCount.text.toString()))
                 toastText.text = "주식 추가 완료"
                 stockList.add(temp)
                 adapter.notifyDataSetChanged()
