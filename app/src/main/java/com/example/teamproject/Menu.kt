@@ -2,27 +2,31 @@ package com.example.teamproject
 
 import android.app.AlertDialog
 import android.app.TabActivity
+import android.content.Context
 import android.icu.util.ULocale.getName
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import android.widget.TabHost.TabSpec
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.data.BarEntry
 import androidx.appcompat.app.AppCompatActivity
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 
 @Suppress("deprecation")
 class Menu : TabActivity() {
+
+
     lateinit var stockAddBtn: Button
     lateinit var dlgStockName: EditText
     lateinit var dlgStockPrice: EditText
@@ -38,19 +42,22 @@ class Menu : TabActivity() {
         var user = intent.getSerializableExtra("user") as User
 //        Toast.makeText(this, "${user.getStock()}.", Toast.LENGTH_SHORT).show()
         var stockList = ArrayList<Stock>()
+        stockList = user.getStock()
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
-        stockListView = findViewById<ListView>(R.id.stockList)
+        stockListView = findViewById<ListView>(R.id.stockList) as ListView
         var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
         stockListView.adapter = adapter
-        var barChart: BarChart = findViewById(R.id.barChart)
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(1.2f, 20.0f))
-        entries.add(BarEntry(2.2f, 70.0f))
-        entries.add(BarEntry(3.2f, 30.0f))
-        entries.add(BarEntry(4.2f, 90.0f))
-        entries.add(BarEntry(5.2f, 70.0f))
-        entries.add(BarEntry(6.2f, 30.0f))
-        entries.add(BarEntry(7.2f, 90.0f))
+        var barChart: LineChart = findViewById(R.id.barChart)
+        val entries = ArrayList<Entry>()
+        entries.add(Entry(1.2f, 20.0f))
+        entries.add(Entry(2.2f, 70.0f))
+        entries.add(Entry(3.2f, 30.0f))
+        entries.add(Entry(4.2f, 90.0f))
+        entries.add(Entry(5.2f, 70.0f))
+        entries.add(Entry(6.2f, 30.0f))
+        entries.add(Entry(7.2f, 90.0f))
+
+
 
         var tabHost = this.tabHost
 
@@ -80,7 +87,7 @@ class Menu : TabActivity() {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
             setMaxVisibleValueCount(7) // 최대 보이는 그래프 개수를 7개로 지정
             setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
-            setDrawBarShadow(false) //그래프의 그림자
+            //setDrawLineShadow(false) //그래프의 그림자
             setDrawGridBackground(false)//격자구조 넣을건지
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
                 axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
@@ -121,21 +128,26 @@ class Menu : TabActivity() {
             legend.isEnabled = false //차트 범례 설정
         }
 
-        var set = BarDataSet(entries, "DataSet") // 데이터셋 초기화
+        var set = LineDataSet(entries, "DataSet") // 데이터셋 초기화
         set.color = ContextCompat.getColor(
             applicationContext!!,
             R.color.design_default_color_primary_dark
         ) // 바 그래프 색 설정
 
-        val dataSet: ArrayList<IBarDataSet> = ArrayList()
+        val dataSet: ArrayList<ILineDataSet> = ArrayList()
         dataSet.add(set)
-        val data = BarData(dataSet)
-        data.barWidth = 0.3f //막대 너비 설정
+        val data = LineData(dataSet)
+        //data. = 0.3f //막대 너비 설정
         barChart.run {
             this.data = data //차트의 데이터를 data로 설정해줌.
-            setFitBars(true)
+            //setFitBars(true)
             invalidate()
         }
+
+
+//        stockListView.setOnClickListener{parent, view, position, id ->
+//            Toast.makeText(applicationContext, stockList[position, to])
+//        }
 
         stockAddBtn.setOnClickListener {
             dialogView = View.inflate(this@Menu, R.layout.addstock, null)
@@ -147,7 +159,6 @@ class Menu : TabActivity() {
             dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
             dlg.setPositiveButton("확인") { dialog, which ->
                 var toast1 = Toast(this@Menu)
-                temp = Stock("hello",dlgStockName.text.toString(),Integer.parseInt(dlgStockPrice.text.toString()),Integer.parseInt(dlgStockCount.text.toString()))
                 toastText.text = "주식 추가 완료"
                 stockList.add(temp)
                 adapter.notifyDataSetChanged()

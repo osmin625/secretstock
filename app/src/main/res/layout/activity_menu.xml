@@ -37,7 +37,7 @@
                     android:text="내 주식들"
                     android:textSize="30dp" />
 
-                <com.github.mikephil.charting.charts.BarChart
+                <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/barChart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -50,17 +50,20 @@
 
             <LinearLayout
                 android:id="@+id/Stock"
+                android:weightSum="5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/stockList"
+                    android:layout_weight="4"
                     android:layout_width="match_parent"
                     android:layout_height="610dp" />
 
                 <Button
                     android:id="@+id/stockAddBtn"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
