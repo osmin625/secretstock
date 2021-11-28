@@ -15,6 +15,8 @@ class Stock {
 
     constructor(code: Int, name: String, price: Int, num: Int) {
         stockCode = code
+
+
         stockName = name
         stockPrice = price
         stockNum = num

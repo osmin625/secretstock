@@ -110,6 +110,7 @@ class Menu : TabActivity() {
                 ) // 라벨 텍스트 컬러 설정
                 textSize = 13f //라벨 텍스트 크기
             }
+
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
                 granularity = 1f // 1 단위만큼 간격 두기
@@ -158,19 +159,19 @@ class Menu : TabActivity() {
             dlgStockPrice = dialogView.findViewById<EditText>(R.id.StockPrice)
             dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
             dlg.setPositiveButton("확인") { dialog, which ->
-                var toast1 = Toast(this@Menu)
-                toastText.text = "주식 추가 완료"
+                //var toast1 = Toast(this@Menu)
+                //toastText.text = "주식 추가 완료"
                 stockList.add(temp)
-                adapter.notifyDataSetChanged()
-                toast1.setGravity(Gravity.CENTER, 0, -800)
-                toast1.show()
+                //adapter.notifyDataSetChanged()
+                //toast1.setGravity(Gravity.CENTER, 0, -800)
+                //toast1.show()
 
             }
             dlg.setNegativeButton("취소") { dialog, which ->
-                var toast2 = Toast(this@Menu)
-                toastText.text = "취소"
-                toast2.setGravity(Gravity.CENTER, 0, -800)
-                toast2.show()
+                //var toast2 = Toast(this@Menu)
+                //toastText.text = "취소"
+                //toast2.setGravity(Gravity.CENTER, 0, -800)
+                //toast2.show()
             }
             dlg.show()
         }

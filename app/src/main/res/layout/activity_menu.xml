@@ -8,44 +8,98 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"></TabWidget>
+            android:layout_alignParentBottom="true">
+        </TabWidget>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
             <LinearLayout
                 android:id="@+id/Chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="안녕하세요,    님"
+                    android:textColor="#B8B8B8"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    android:paddingTop="30dp"
+                    android:paddingHorizontal="10dp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:text="내 주식들"
-                    android:textSize="30dp" />
+                    android:text="Home"
+                    android:paddingBottom="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/exchange_rate" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/barChart"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="60dp"
+                        android:text="1180.73 원"
+                        android:textColor="@color/black"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="50dp"
-                    android:layout_weight="1"
-                    tools:ignore="MissingClass" />
+                    android:layout_height="wrap_content">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/barChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="50dp"
+                        android:layout_weight="1"
+                        tools:ignore="MissingClass" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stock"
+                        android:textSize="25dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="15dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="see all"
+                        android:layout_marginLeft="250dp"
+                        android:textColor="#2323C8"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
