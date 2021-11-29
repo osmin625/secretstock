@@ -19,6 +19,7 @@ class Regist : AppCompatActivity(){
 
         var isExistBlank = false
         var isPWSame = false
+        var isExistId = false
 
         var btn_reg = findViewById<Button>(R.id.btn_reg)
         var regName = findViewById<EditText>(R.id.regName)
@@ -28,11 +29,27 @@ class Regist : AppCompatActivity(){
         var CheckOverlap = findViewById<Button>(R.id.checkOverlap)
 
         CheckOverlap.setOnClickListener {
-            var confirmname = regName.text.toString()
+            var confirmname = regId.text.toString()
             val database = FirebaseDatabase.getInstance()
             val myRef = database.getReference()
+            myRef.child("user").child(confirmname).get().addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.value}")
+                var name = it.child("id").value.toString()
+//                Toast.makeText(this, "${name}",Toast.LENGTH_SHORT).show()
+                if(name == confirmname){
+                    Toast.makeText(this, "이미 존재하는 아이디입니다.",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this, "사용 가능한 아이디입니다.",Toast.LENGTH_SHORT).show()
+                    isExistId = true
+                }
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+            }
 
         }
+
+
 
         btn_reg.setOnClickListener {
             val name = regName.text.toString()
@@ -56,7 +73,7 @@ class Regist : AppCompatActivity(){
                 }
             }
 
-            if(!isExistBlank && isPWSame){
+            if(!isExistBlank && isPWSame && isExistId){
                 Toast.makeText(this, "회원가입 성공",Toast.LENGTH_SHORT).show()
                 var user : User  = User(
                     name, id, pw, startStock, currentStock, stockChange
@@ -75,6 +92,9 @@ class Regist : AppCompatActivity(){
                 }
                 else if(!isPWSame){
                     Toast.makeText(this, "비밀번호를 확인해주세요",Toast.LENGTH_SHORT).show()
+                }
+                else if(!isExistId){
+                    Toast.makeText(this, "아이디를 확인해주세요",Toast.LENGTH_SHORT).show()
                 }
             }
         }
