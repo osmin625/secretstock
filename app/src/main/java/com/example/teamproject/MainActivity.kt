@@ -39,10 +39,12 @@ class MainActivity : AppCompatActivity() {
                         val startStock = it.child("startStock").value as ArrayList<Stock>
                         val currentStock = it.child("currentStock").value as ArrayList<Stock>
                         val stockChange = it.child("stockChange").value as ArrayList<Int>
+                        val stockNumber = Integer.parseInt(it.child("stockNumber").value.toString())
+                        val changeNum = Integer.parseInt(it.child("changeNum").value.toString())
                         var user = User(
-                            name, tempId, value, startStock, currentStock, stockChange
+                            name, tempId, value, startStock, currentStock, stockChange,stockNumber, changeNum
                         )
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "${user.getname()}님 환영합니다.", Toast.LENGTH_SHORT).show()
                         var intentMenu = Intent(this, Menu::class.java)
                         intentMenu.putExtra("user", user)
                         startActivity(intentMenu)

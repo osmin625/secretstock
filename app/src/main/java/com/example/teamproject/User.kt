@@ -9,36 +9,26 @@ class User(
     var password: String,
     val startStock: ArrayList<Stock>,
     val currentStock: ArrayList<Stock>,
-    val stockChange: ArrayList<Int>
-):Serializable {
-    var stockNumber = 0
-        private set
-    var changeNum = 0
-        set(temp) {
-            stockNumber = temp
-        }
-
+    val stockChange: ArrayList<Int>,
+    private var stockNumber : Int,
+    private var changeNum : Int
+):Serializable{
     fun getname(): String {
         return name
     }
     fun getStock(): ArrayList<Stock>{
         return currentStock
     }
-
-    fun setname(s: String) {
-        name = s
+    fun getstockNumber() : Int{
+        return stockNumber
     }
-
-    fun setStock(temp: Stock) {
-        startStock[stockNumber] = temp
-        currentStock[stockNumber] = temp
-        stockNumber++
+    fun getChangeNum() : Int{
+        return changeNum
     }
 
     fun setChange(temp: Int) {
         stockChange[changeNum++] = temp
     }
-
     fun setstockNumber(temp: Int) {
         stockNumber = temp
     }

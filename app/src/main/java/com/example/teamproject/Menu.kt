@@ -44,17 +44,16 @@ class Menu : TabActivity() {
         setContentView(R.layout.activity_menu)
         var intent = intent
         var user = intent.getSerializableExtra("user") as User
-//        Toast.makeText(this, "${user.getStock()}.", Toast.LENGTH_SHORT).show()
         var stockList = ArrayList<Stock>()
-        stockList = user.getStock()
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
-        tempStock = Stock()
-        stockListView = findViewById<ListView>(R.id.stockList) as ListView
-        var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
-        stockListView.adapter = adapter
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
         var nameText : TextView = findViewById(R.id.nameText)
+        stockList = user.getStock()
+        tempStock = Stock()
+        var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
+        stockListView = findViewById<ListView>(R.id.stockList) as ListView
+        stockListView.adapter = adapter
         nameText.text = "안녕하세요," + user.getname() + "님"
         entries.add(Entry(1.2f, 20.0f))
         entries.add(Entry(2.2f, 70.0f))
@@ -158,6 +157,8 @@ class Menu : TabActivity() {
 //        }
 
         stockAddBtn.setOnClickListener {
+            var flag = 0
+            var StockCode = ""
             dialogView = View.inflate(this@Menu, R.layout.addstock, null)
             stockSearchBtn = dialogView.findViewById<Button>(R.id.stockSearchBtn)
             var dlg = AlertDialog.Builder(this@Menu)
@@ -169,8 +170,32 @@ class Menu : TabActivity() {
             dlg.setPositiveButton("확인") { dialog, which ->
                 //var toast1 = Toast(this@Menu)
                 //toastText.text = "주식 추가 완료"
-                stockList.add(tempStock)
-                //adapter.notifyDataSetChanged()
+                if(flag == 1) {
+                    val database = FirebaseDatabase.getInstance()
+                    var stockNum : Int
+                    var stockSum = Integer.parseInt(dlgStockCount.text.toString()) * Integer.parseInt(
+                            dlgStockPrice.text.toString())
+                    tempStock = Stock(
+                        StockCode,
+                        dlgStockName.text.toString(),
+                        stockSum,
+                        Integer.parseInt(dlgStockCount.text.toString())
+                    )
+                    stockList.add(tempStock)
+                    stockNum = user.getstockNumber()
+                    var userRef= database.getReference()
+                    userRef.child("user").child(user.id).child("startStock").child(stockNum.toString()).setValue(tempStock)
+                    userRef.child("user").child(user.id).child("currentStock").child(stockNum.toString()).setValue(tempStock)
+                    stockNum += 1
+                    userRef.child("user").child(user.id).child("stockNumber").setValue(stockNum)
+                    Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
+
+
+                }
+                else{
+                    Toast.makeText(this, "주식정보를 입력하세요.",Toast.LENGTH_SHORT).show()
+                }
+            //adapter.notifyDataSetChanged()
                 //toast1.setGravity(Gravity.CENTER, 0, -800)
                 //toast1.show()
             }
@@ -193,6 +218,8 @@ class Menu : TabActivity() {
                     tempStock.stockName = it.key.toString()
                     resultStockNameDB.text = tempStock.stockName
                     resultStockCodeDB.text = tempStock.stockCode
+                    StockCode = tempStock.stockCode
+                    flag = 1
                 }.addOnFailureListener{
                     Log.e("firebase", "Error getting data", it)
                 }

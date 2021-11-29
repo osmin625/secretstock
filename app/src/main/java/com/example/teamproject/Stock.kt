@@ -3,8 +3,8 @@ package com.example.teamproject
 class Stock {
     var stockCode: String
     var stockName: String
-    var stockPrice: Int
-    var stockNum: Int
+    private var stockPrice: Int
+    private var stockNum: Int
 
     constructor() {
         stockCode = ""
@@ -18,5 +18,11 @@ class Stock {
         stockName = name
         stockPrice = price
         stockNum = num
+    }
+    fun setStockNum(temp : Int){
+        stockNum = temp
+    }
+    fun setStockPrice(temp : Int){
+        stockPrice = temp
     }
 }
