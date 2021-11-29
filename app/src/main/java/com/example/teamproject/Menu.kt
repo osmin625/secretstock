@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.firebase.database.FirebaseDatabase
 
 
 @Suppress("deprecation")
@@ -49,31 +50,32 @@ class Menu : TabActivity() {
         stockListView.adapter = adapter
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
+        var nameText : TextView = findViewById(R.id.nameText)
+        nameText.text = "안녕하세요," + user.getname() + "님"
         entries.add(Entry(1.2f, 20.0f))
         entries.add(Entry(2.2f, 70.0f))
         entries.add(Entry(3.2f, 30.0f))
         entries.add(Entry(4.2f, 90.0f))
         entries.add(Entry(5.2f, 70.0f))
-        entries.add(Entry(6.2f, 30.0f))
-        entries.add(Entry(7.2f, 90.0f))
+
 
 
 
         var tabHost = this.tabHost
 
-        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("차트")
+        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("",resources.getDrawable(R.drawable.home_selector))
         tabSpecChart.setContent(R.id.Chart)
         tabHost.addTab(tabSpecChart)
 
-        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("주식")
+        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("",resources.getDrawable(R.drawable.stock_selector))
         tabSpecStock.setContent(R.id.Stock)
         tabHost.addTab(tabSpecStock)
 
-        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("배경")
+        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("",resources.getDrawable(R.drawable.wallpaper_selector))
         tabSpecWallpaper.setContent(R.id.Wallpaper)
         tabHost.addTab(tabSpecWallpaper)
 
-        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("설정")
+        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("",resources.getDrawable(R.drawable.settings_selector))
         tabSpecSetting.setContent(R.id.Setting)
         tabHost.addTab(tabSpecSetting)
 
@@ -85,17 +87,20 @@ class Menu : TabActivity() {
 
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
-            setMaxVisibleValueCount(7) // 최대 보이는 그래프 개수를 7개로 지정
+            setMaxVisibleValueCount(5) // 최대 보이는 그래프 개수를 5개로 지정
             setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
             //setDrawLineShadow(false) //그래프의 그림자
             setDrawGridBackground(false)//격자구조 넣을건지
+
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
                 axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
                 axisMinimum = 0f // 최소값 0
                 granularity = 50f // 50 단위마다 선을 그리려고 설정.
-                setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
-                setDrawGridLines(true) //격자 라인 활용
+                setDrawLabels(false) // 값 적는거 허용 (0, 50, 100)
+                //setDrawGridLines(true) //격자 라인 활용
                 setDrawAxisLine(false) // 축 그리기 설정
+                setDrawZeroLine(false)
+                setDrawGridLines(false)
                 axisLineColor = ContextCompat.getColor(
                     context,
                     R.color.design_default_color_secondary_variant
@@ -144,7 +149,6 @@ class Menu : TabActivity() {
             invalidate()
         }
 
-
 //        stockListView.setOnClickListener{parent, view, position, id ->
 //            Toast.makeText(applicationContext, stockList[position, to])
 //        }
@@ -158,29 +162,25 @@ class Menu : TabActivity() {
             dlgStockPrice = dialogView.findViewById<EditText>(R.id.StockPrice)
             dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
             dlg.setPositiveButton("확인") { dialog, which ->
-                var toast1 = Toast(this@Menu)
-                toastText.text = "주식 추가 완료"
+                //var toast1 = Toast(this@Menu)
+                //toastText.text = "주식 추가 완료"
                 stockList.add(temp)
-                adapter.notifyDataSetChanged()
-                toast1.setGravity(Gravity.CENTER, 0, -800)
-                toast1.show()
-
+                //adapter.notifyDataSetChanged()
+                //toast1.setGravity(Gravity.CENTER, 0, -800)
+                //toast1.show()
             }
             dlg.setNegativeButton("취소") { dialog, which ->
-                var toast2 = Toast(this@Menu)
-                toastText.text = "취소"
-                toast2.setGravity(Gravity.CENTER, 0, -800)
-                toast2.show()
+                //var toast2 = Toast(this@Menu)
+                //toastText.text = "취소"
+                //toast2.setGravity(Gravity.CENTER, 0, -800)
+                //toast2.show()
             }
             dlg.show()
         }
-
-
     }
 
-
     inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
+        private val days = arrayOf("mon", "tue", "wed", "thu", "fri")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt() - 1) ?: value.toString()
         }
