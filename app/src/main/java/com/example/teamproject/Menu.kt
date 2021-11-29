@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.firebase.database.FirebaseDatabase
 
 
 @Suppress("deprecation")
@@ -49,6 +50,8 @@ class Menu : TabActivity() {
         stockListView.adapter = adapter
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
+        var nameText : TextView = findViewById(R.id.nameText)
+        nameText.text = "안녕하세요," + user.getname() + "님"
         entries.add(Entry(1.2f, 20.0f))
         entries.add(Entry(2.2f, 70.0f))
         entries.add(Entry(3.2f, 30.0f))
@@ -112,7 +115,6 @@ class Menu : TabActivity() {
                 ) // 라벨 텍스트 컬러 설정
                 textSize = 13f //라벨 텍스트 크기
             }
-
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
                 granularity = 1f // 1 단위만큼 간격 두기
@@ -147,7 +149,6 @@ class Menu : TabActivity() {
             invalidate()
         }
 
-
 //        stockListView.setOnClickListener{parent, view, position, id ->
 //            Toast.makeText(applicationContext, stockList[position, to])
 //        }
@@ -167,7 +168,6 @@ class Menu : TabActivity() {
                 //adapter.notifyDataSetChanged()
                 //toast1.setGravity(Gravity.CENTER, 0, -800)
                 //toast1.show()
-
             }
             dlg.setNegativeButton("취소") { dialog, which ->
                 //var toast2 = Toast(this@Menu)
@@ -177,10 +177,7 @@ class Menu : TabActivity() {
             }
             dlg.show()
         }
-
-
     }
-
 
     inner class MyXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("mon", "tue", "wed", "thu", "fri")
