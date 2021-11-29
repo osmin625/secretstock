@@ -60,8 +60,8 @@ class Menu : TabActivity() {
 
         var tabHost = this.tabHost
 
-        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("",resources.getDrawable(R.drawable.home_selector))
-        tabSpecChart.setContent(R.id.Chart)
+        var tabSpecChart = tabHost.newTabSpec("Home").setIndicator("",resources.getDrawable(R.drawable.home_selector))
+        tabSpecChart.setContent(R.id.Home)
         tabHost.addTab(tabSpecChart)
 
         var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("",resources.getDrawable(R.drawable.stock_selector))
