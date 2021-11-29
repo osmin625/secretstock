@@ -54,25 +54,26 @@ class Menu : TabActivity() {
         entries.add(Entry(3.2f, 30.0f))
         entries.add(Entry(4.2f, 90.0f))
         entries.add(Entry(5.2f, 70.0f))
-
+        entries.add(Entry(6.2f, 30.0f))
+        entries.add(Entry(7.2f, 90.0f))
 
 
 
         var tabHost = this.tabHost
 
-        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("",resources.getDrawable(R.drawable.home_selector))
+        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("차트")
         tabSpecChart.setContent(R.id.Chart)
         tabHost.addTab(tabSpecChart)
 
-        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("",resources.getDrawable(R.drawable.stock_selector))
+        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("주식")
         tabSpecStock.setContent(R.id.Stock)
         tabHost.addTab(tabSpecStock)
 
-        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("",resources.getDrawable(R.drawable.wallpaper_selector))
+        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("배경")
         tabSpecWallpaper.setContent(R.id.Wallpaper)
         tabHost.addTab(tabSpecWallpaper)
 
-        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("",resources.getDrawable(R.drawable.settings_selector))
+        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("설정")
         tabSpecSetting.setContent(R.id.Setting)
         tabHost.addTab(tabSpecSetting)
 
@@ -84,20 +85,17 @@ class Menu : TabActivity() {
 
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
-            setMaxVisibleValueCount(5) // 최대 보이는 그래프 개수를 5개로 지정
+            setMaxVisibleValueCount(7) // 최대 보이는 그래프 개수를 7개로 지정
             setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
             //setDrawLineShadow(false) //그래프의 그림자
             setDrawGridBackground(false)//격자구조 넣을건지
-
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
                 axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
                 axisMinimum = 0f // 최소값 0
                 granularity = 50f // 50 단위마다 선을 그리려고 설정.
-                setDrawLabels(false) // 값 적는거 허용 (0, 50, 100)
-                //setDrawGridLines(true) //격자 라인 활용
+                setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
+                setDrawGridLines(true) //격자 라인 활용
                 setDrawAxisLine(false) // 축 그리기 설정
-                setDrawZeroLine(false)
-                setDrawGridLines(false)
                 axisLineColor = ContextCompat.getColor(
                     context,
                     R.color.design_default_color_secondary_variant
@@ -112,7 +110,6 @@ class Menu : TabActivity() {
                 ) // 라벨 텍스트 컬러 설정
                 textSize = 13f //라벨 텍스트 크기
             }
-
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
                 granularity = 1f // 1 단위만큼 간격 두기
@@ -161,19 +158,19 @@ class Menu : TabActivity() {
             dlgStockPrice = dialogView.findViewById<EditText>(R.id.StockPrice)
             dlgStockCount = dialogView.findViewById<EditText>(R.id.StockCount)
             dlg.setPositiveButton("확인") { dialog, which ->
-                //var toast1 = Toast(this@Menu)
-                //toastText.text = "주식 추가 완료"
+                var toast1 = Toast(this@Menu)
+                toastText.text = "주식 추가 완료"
                 stockList.add(temp)
-                //adapter.notifyDataSetChanged()
-                //toast1.setGravity(Gravity.CENTER, 0, -800)
-                //toast1.show()
+                adapter.notifyDataSetChanged()
+                toast1.setGravity(Gravity.CENTER, 0, -800)
+                toast1.show()
 
             }
             dlg.setNegativeButton("취소") { dialog, which ->
-                //var toast2 = Toast(this@Menu)
-                //toastText.text = "취소"
-                //toast2.setGravity(Gravity.CENTER, 0, -800)
-                //toast2.show()
+                var toast2 = Toast(this@Menu)
+                toastText.text = "취소"
+                toast2.setGravity(Gravity.CENTER, 0, -800)
+                toast2.show()
             }
             dlg.show()
         }
@@ -183,7 +180,7 @@ class Menu : TabActivity() {
 
 
     inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("mon", "tue", "wed", "thu", "fri")
+        private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt() - 1) ?: value.toString()
         }
