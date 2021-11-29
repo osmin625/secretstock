@@ -60,19 +60,19 @@ class Menu : TabActivity() {
 
         var tabHost = this.tabHost
 
-        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("차트")
+        var tabSpecChart = tabHost.newTabSpec("Chart").setIndicator("",resources.getDrawable(R.drawable.home_selector))
         tabSpecChart.setContent(R.id.Chart)
         tabHost.addTab(tabSpecChart)
 
-        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("주식")
+        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("",resources.getDrawable(R.drawable.stock_selector))
         tabSpecStock.setContent(R.id.Stock)
         tabHost.addTab(tabSpecStock)
 
-        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("배경")
+        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("",resources.getDrawable(R.drawable.wallpaper_selector))
         tabSpecWallpaper.setContent(R.id.Wallpaper)
         tabHost.addTab(tabSpecWallpaper)
 
-        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("설정")
+        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("",resources.getDrawable(R.drawable.settings_selector))
         tabSpecSetting.setContent(R.id.Setting)
         tabHost.addTab(tabSpecSetting)
 
@@ -93,7 +93,7 @@ class Menu : TabActivity() {
                 axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
                 axisMinimum = 0f // 최소값 0
                 granularity = 50f // 50 단위마다 선을 그리려고 설정.
-                setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
+                setDrawLabels(false) // 값 적는거 허용 (0, 50, 100)
                 //setDrawGridLines(true) //격자 라인 활용
                 setDrawAxisLine(false) // 축 그리기 설정
                 setDrawZeroLine(false)
