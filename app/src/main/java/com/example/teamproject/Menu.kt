@@ -35,7 +35,10 @@ class Menu : TabActivity() {
     lateinit var toastText: TextView
     lateinit var dialogView: View
     lateinit var stockListView: ListView
-    lateinit var temp: Stock
+    lateinit var tempStock: Stock
+    lateinit var stockSearchBtn: Button
+    lateinit var resultStockCodeDB:TextView
+    lateinit var resultStockNameDB:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -45,6 +48,7 @@ class Menu : TabActivity() {
         var stockList = ArrayList<Stock>()
         stockList = user.getStock()
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
+        tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
         stockListView.adapter = adapter
@@ -155,6 +159,7 @@ class Menu : TabActivity() {
 
         stockAddBtn.setOnClickListener {
             dialogView = View.inflate(this@Menu, R.layout.addstock, null)
+            stockSearchBtn = dialogView.findViewById<Button>(R.id.stockSearchBtn)
             var dlg = AlertDialog.Builder(this@Menu)
             dlg.setTitle("주식 정보 입력")
             dlg.setView(dialogView)
@@ -164,7 +169,7 @@ class Menu : TabActivity() {
             dlg.setPositiveButton("확인") { dialog, which ->
                 //var toast1 = Toast(this@Menu)
                 //toastText.text = "주식 추가 완료"
-                stockList.add(temp)
+                stockList.add(tempStock)
                 //adapter.notifyDataSetChanged()
                 //toast1.setGravity(Gravity.CENTER, 0, -800)
                 //toast1.show()
@@ -176,7 +181,25 @@ class Menu : TabActivity() {
                 //toast2.show()
             }
             dlg.show()
+            stockSearchBtn.setOnClickListener {
+                val database = FirebaseDatabase.getInstance()
+                val myRef = database.reference
+                var tempStockName = dlgStockName.text.toString()
+                resultStockCodeDB = dialogView.findViewById(R.id.StockCodeDB)
+                resultStockNameDB = dialogView.findViewById(R.id.StockNameDB)
+                myRef.child("stock").child(tempStockName).get().addOnSuccessListener {
+                    Log.i("firebase", "Got value ${it.value}")
+                    tempStock.stockCode = it.value.toString()
+                    tempStock.stockName = it.key.toString()
+                    resultStockNameDB.text = tempStock.stockName
+                    resultStockCodeDB.text = tempStock.stockCode
+                }.addOnFailureListener{
+                    Log.e("firebase", "Error getting data", it)
+                }
+            }
         }
+
+
     }
 
     inner class MyXAxisFormatter : ValueFormatter() {
