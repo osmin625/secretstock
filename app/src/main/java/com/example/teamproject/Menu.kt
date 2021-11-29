@@ -198,8 +198,6 @@ class Menu : TabActivity() {
                 }
             }
         }
-
-
     }
 
     inner class MyXAxisFormatter : ValueFormatter() {
