@@ -16,7 +16,6 @@
             android:textSize="30dp" />
 
         <Button
-            android:id="@+id/article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"

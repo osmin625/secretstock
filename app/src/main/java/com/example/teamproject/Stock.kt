@@ -1,6 +1,8 @@
 package com.example.teamproject
 
-class Stock {
+import java.io.Serializable
+
+class Stock :Serializable{
     var stockCode: String
     var stockName: String
     var stockPrice: Int
@@ -19,4 +21,14 @@ class Stock {
         stockPrice = price
         stockNum = num
     }
+    fun getstockName(): String{
+        return stockName
+    }
+    fun getstockPrice(): Int{
+        return stockPrice
+    }
+    fun getstockNum(): Int{
+        return stockNum
+    }
+
 }

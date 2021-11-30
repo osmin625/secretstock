@@ -23,6 +23,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.database.FirebaseDatabase
+import kotlin.collections.HashMap as HashMap
 
 
 @Suppress("deprecation")
@@ -38,12 +39,12 @@ class Menu : TabActivity() {
     lateinit var stockSearchBtn: Button
     lateinit var resultStockCodeDB:TextView
     lateinit var resultStockNameDB:TextView
+    lateinit var stockList : ArrayList<Stock>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         var intent = intent
         var user = intent.getSerializableExtra("user") as User
-        var stockList = ArrayList<Stock>()
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
@@ -53,7 +54,7 @@ class Menu : TabActivity() {
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         var adapter = ArrayAdapter(this, R.layout.items, stockList)
         stockListView.adapter = adapter
-        nameText.text = "안녕하세요," + user.getname() + "님"
+        nameText.text = "안녕하세요," +user.getname()+ "님"
         entries.add(Entry(1.2f, 20.0f))
         entries.add(Entry(2.2f, 70.0f))
         entries.add(Entry(3.2f, 30.0f))

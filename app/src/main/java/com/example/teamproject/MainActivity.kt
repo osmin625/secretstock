@@ -36,13 +36,31 @@ class MainActivity : AppCompatActivity() {
                 else {
                     if (pw == value) {
                         val name = it.child("name").value.toString()
-                        val startStock = it.child("startStock").value as ArrayList<Stock>
-                        val currentStock = it.child("currentStock").value as ArrayList<Stock>
                         val stockChange = it.child("stockChange").value as ArrayList<Int>
                         val stockNumber = Integer.parseInt(it.child("stockNumber").value.toString())
                         val changeNum = Integer.parseInt(it.child("changeNum").value.toString())
+                        val currentStock = ArrayList<Stock>(1)
+                        val startStock = ArrayList<Stock>(1)
+                        for(i in 0..stockNumber - 1){
+                            val stockCode = it.child("currentStock").child(i.toString()).child("stockCode").value.toString()
+                            val stockName = it.child("currentStock").child(i.toString()).child("stockName").value.toString()
+                            val stockPrice = Integer.parseInt(it.child("currentStock").child(i.toString()).child("stockPrice").value.toString())
+                            val stockNum = Integer.parseInt(it.child("currentStock").child(i.toString()).child("stockNum").value.toString())
+                            currentStock.add(i,Stock(
+                                stockCode, stockName, stockPrice, stockNum
+                            ))
+                        }
+                        for(i in 0..stockNumber - 1){
+                            val stockCode = it.child("startStock").child(i.toString()).child("stockCode").value.toString()
+                            val stockName = it.child("startStock").child(i.toString()).child("stockName").value.toString()
+                            val stockPrice = Integer.parseInt(it.child("startStock").child(i.toString()).child("stockPrice").value.toString())
+                            val stockNum = Integer.parseInt(it.child("startStock").child(i.toString()).child("stockNum").value.toString())
+                            startStock.add(i,Stock(
+                                stockCode, stockName, stockPrice, stockNum
+                            ))
+                        }
                         var user = User(
-                            name, tempId, value, startStock, currentStock, stockChange,stockNumber, changeNum
+                            name, tempId, value, startStock, currentStock, stockChange, stockNumber, changeNum
                         )
                         Toast.makeText(this, "${user.getname()}님 환영합니다.", Toast.LENGTH_SHORT).show()
                         var intentMenu = Intent(this, Menu::class.java)

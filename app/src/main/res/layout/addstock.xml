@@ -49,15 +49,4 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:hint="   주식 개수" />
-
-    <Button
-        android:id="@+id/btnCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:text="입력" />
-
-
-
-
 </LinearLayout>
