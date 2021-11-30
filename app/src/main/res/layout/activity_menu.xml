@@ -144,7 +144,7 @@
                 <ListView
                     android:id="@+id/stockList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="540dp"
                     android:dividerHeight="4dp"
                     android:divider="#ffffff"
                     />
@@ -155,13 +155,17 @@
                 android:id="@+id/Wallpaper"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical">
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Setting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical">
+
+            </LinearLayout>
 
         </FrameLayout>
     </RelativeLayout>
