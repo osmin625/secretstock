@@ -181,15 +181,18 @@ class Menu : TabActivity() {
                         stockSum,
                         Integer.parseInt(dlgStockCount.text.toString())
                     )
-                    stockList.add(tempStock)
+
                     stockNum = user.getstockNumber()
                     var userRef= database.getReference()
                     userRef.child("user").child(user.id).child("startStock").child(stockNum.toString()).setValue(tempStock)
                     userRef.child("user").child(user.id).child("currentStock").child(stockNum.toString()).setValue(tempStock)
                     stockNum += 1
+                    user.setstockNumber(stockNum)
                     userRef.child("user").child(user.id).child("stockNumber").setValue(stockNum)
+                    //Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
 
+                    adapter.notifyDataSetChanged()
 
                 }
                 else{
