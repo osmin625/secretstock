@@ -19,5 +19,4 @@ class Stock {
         stockPrice = price
         stockNum = num
     }
-
 }
