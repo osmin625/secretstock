@@ -5,6 +5,7 @@ import android.app.TabActivity
 import android.content.Context
 import android.icu.util.ULocale.getName
 import android.os.Bundle
+import android.preference.PreferenceActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -26,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 @Suppress("deprecation")
 class Menu : TabActivity() {
-
-
     lateinit var stockAddBtn: Button
     lateinit var dlgStockName: EditText
     lateinit var dlgStockPrice: EditText
@@ -51,8 +50,8 @@ class Menu : TabActivity() {
         var nameText : TextView = findViewById(R.id.nameText)
         stockList = user.getStock()
         tempStock = Stock()
-        var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stockList)
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
+        var adapter = ArrayAdapter(this, R.layout.items, stockList)
         stockListView.adapter = adapter
         nameText.text = "안녕하세요," + user.getname() + "님"
         entries.add(Entry(1.2f, 20.0f))
@@ -236,6 +235,7 @@ class Menu : TabActivity() {
             return days.getOrNull(value.toInt() - 1) ?: value.toString()
         }
     }
+    inner class Setting : PreferenceActivity() {}
 }
 
 private fun <E> ArrayList<E>.add(element: EditText?) {
