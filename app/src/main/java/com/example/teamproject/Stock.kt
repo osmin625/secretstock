@@ -1,5 +1,6 @@
 package com.example.teamproject
 
+
 class Stock {
     var stockCode: String
     var stockName: String
@@ -14,10 +15,14 @@ class Stock {
     }
 
     constructor(code: String, name: String, price: Int, num: Int) {
-        stockCode = code
-        stockName = name
-        stockPrice = price
-        stockNum = num
+        this.stockCode = code
+        this.stockName = name
+        this.stockPrice = price
+        this.stockNum = num
+    }
+
+    fun getName(): String {
+        return stockName
     }
 
 }

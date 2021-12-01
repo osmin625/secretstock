@@ -144,7 +144,7 @@
                 <ListView
                     android:id="@+id/stockList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="500dp"
                     android:dividerHeight="4dp"
                     android:divider="#ffffff"
                     />
