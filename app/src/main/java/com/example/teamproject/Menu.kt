@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.util.Log
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -24,8 +23,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.items.view.*
-import java.lang.Thread.sleep
+import kotlin.collections.HashMap as HashMap
 
 
 @Suppress("deprecation")
@@ -41,62 +39,29 @@ class Menu : TabActivity() {
     lateinit var stockSearchBtn: Button
     lateinit var resultStockCodeDB:TextView
     lateinit var resultStockNameDB:TextView
+    lateinit var stockList : ArrayList<Stock>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         var intent = intent
         var user = intent.getSerializableExtra("user") as User
-        var newstockList = mutableListOf<Listviewitem>()
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
         var nameText : TextView = findViewById(R.id.nameText)
-        var stockcount = user.getstockNumber()
-
-        var stockList = mutableListOf<Stock>()
+        stockList = user.getStock()
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
-        var adapter = ListViewAdapter(newstockList)
-
-
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference
-        for (i in 0..user.getstockNumber() - 1){
-            myRef.child("user").child(user.id).child("currentStock").child(i.toString()).get().addOnSuccessListener {
-                Log.i("firebase", "Got value ${it.value}")
-                val stockName = it.child("stockName").value.toString()
-                val stockCode = it.child("stockCode").value.toString()
-                val stockPrice = Integer.parseInt(it.child("stockPrice").value.toString())
-                val stockNum = Integer.parseInt(it.child("stockNum").value.toString())
-                stockList.add(Stock(
-                    stockCode,stockName,stockPrice,stockNum
-                ))
-                if(i == user.getstockNumber() - 1){
-                }
-                newstockList.add(Listviewitem(stockName, stockPrice, stockNum))
-            }.addOnFailureListener{
-                Log.e("firebase", "Error getting data", it)
-            }
-
-        }
-
-
-//        for(i in stockList)
-//        {
-//            newstockList.add(Listviewitem(i.stockName, i.stockPrice, i.stockNum))
-//        }
-
+        var adapter = ArrayAdapter(this, R.layout.items, stockList)
         stockListView.adapter = adapter
-
-
-
-//        stockListView.adapter = adapter
-        nameText.text = "안녕하세요," + user.getname()+ "님"
+        nameText.text = "안녕하세요," +user.getname()+ "님"
         entries.add(Entry(1.2f, 20.0f))
         entries.add(Entry(2.2f, 70.0f))
         entries.add(Entry(3.2f, 30.0f))
         entries.add(Entry(4.2f, 90.0f))
         entries.add(Entry(5.2f, 70.0f))
+
+
 
 
         var tabHost = this.tabHost
@@ -122,8 +87,6 @@ class Menu : TabActivity() {
         //tabHost.addTab(tabSpecTemp)
 
         tabHost.currentTab = 0
-
-
 
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
@@ -189,16 +152,9 @@ class Menu : TabActivity() {
             invalidate()
         }
 
-
-
 //        stockListView.setOnClickListener{parent, view, position, id ->
 //            Toast.makeText(applicationContext, stockList[position, to])
 //        }
-
-        stockListView.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
-            val item = parent.getItemAtPosition(position) as Listviewitem
-            Toast.makeText(this, "안녕", Toast.LENGTH_SHORT).show()
-        }
 
         stockAddBtn.setOnClickListener {
             var flag = 0
@@ -271,27 +227,6 @@ class Menu : TabActivity() {
                     Log.e("firebase", "Error getting data", it)
                 }
             }
-        }
-
-
-    }
-
-
-
-
-
-    inner class ListViewAdapter(private val items: MutableList<Listviewitem>): BaseAdapter() {
-        override fun getCount(): Int = items.size
-        override fun getItem(position: Int): Listviewitem = items[position]
-        override fun getItemId(position: Int): Long = position.toLong()
-        override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-            var convertView = view
-            if (convertView == null) convertView = LayoutInflater.from(parent?.context).inflate(R.layout.items, parent, false)
-            val item: Listviewitem = items[position]
-            convertView!!.text1.text = item.name
-            convertView.text2.text = item.price.toString()
-            convertView.text3.text = item.num.toString()
-            return convertView
         }
     }
 

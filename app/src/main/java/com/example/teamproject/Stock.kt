@@ -1,7 +1,8 @@
 package com.example.teamproject
 
+import java.io.Serializable
 
-class Stock {
+class Stock :Serializable{
     var stockCode: String
     var stockName: String
     var stockPrice: Int
@@ -15,14 +16,19 @@ class Stock {
     }
 
     constructor(code: String, name: String, price: Int, num: Int) {
-        this.stockCode = code
-        this.stockName = name
-        this.stockPrice = price
-        this.stockNum = num
+        stockCode = code
+        stockName = name
+        stockPrice = price
+        stockNum = num
     }
-
-    fun getName(): String {
+    fun getstockName(): String{
         return stockName
+    }
+    fun getstockPrice(): Int{
+        return stockPrice
+    }
+    fun getstockNum(): Int{
+        return stockNum
     }
 
 }

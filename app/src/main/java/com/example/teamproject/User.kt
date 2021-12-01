@@ -19,6 +19,9 @@ class User(
     fun getStock(): ArrayList<Stock>{
         return currentStock
     }
+    fun getstartStock(): ArrayList<Stock>{
+        return startStock
+    }
     fun getstockNumber() : Int{
         return stockNumber
     }
