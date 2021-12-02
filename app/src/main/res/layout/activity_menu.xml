@@ -16,160 +16,161 @@
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"></TabWidget>
 
-        <FrameLayout
-            android:id="@android:id/tabcontent"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="640dp">
 
-            <LinearLayout
-                android:id="@+id/Home"
+            <FrameLayout
+                android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/nameText"
+                <LinearLayout
+                    android:id="@+id/Home"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
-                    android:paddingTop="30dp"
-                    android:text="안녕하세요,    님"
-                    android:textColor="#B8B8B8"
-                    android:textSize="20dp"
-                    android:textStyle="italic" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Home"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageButton
+                    <TextView
+                        android:id="@+id/nameText"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_gravity="center"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/exchange_rate"
-                        tools:ignore="SpeakableTextPresentCheck" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="25dp"
-                        android:text="내 자산"
-
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="49dp"
-                        android:layout_marginTop="55dp"
-                        android:text="원"
-                        android:textColor="@color/black"
-                        android:textSize="30dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/barChart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_margin="20dp"
-                        android:background="@drawable/transition"
-                        tools:ignore="MissingClass" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="15dp"
-                        android:text="Stock"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="250dp"
-                        android:text="see all"
-                        android:textColor="#2323C8" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Stock"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="5">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        android:paddingHorizontal="10dp"
+                        android:paddingTop="30dp"
+                        android:text="안녕하세요,    님"
+                        android:textColor="#B8B8B8"
+                        android:textSize="20dp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
-                        android:paddingTop="20dp"
                         android:paddingBottom="10dp"
-                        android:text="Stock"
+                        android:text="Home"
                         android:textColor="@color/black"
-                        android:textSize="35dp"
-                        android:textStyle="bold|italic" />
-
-                    <Button
-                        android:id="@+id/stockAddBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="130dp"
-                        android:background="@drawable/stock_add"
-                        android:gravity="center"
-                        android:text="+   종목추가하기"
-                        android:textAlignment="center"
-                        android:textColor="#4c6fff"
+                        android:textSize="40dp"
                         android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/exchange_rate"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginTop="25dp"
+                            android:text="내 자산"
+
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="49dp"
+                            android:layout_marginTop="55dp"
+                            android:text="원"
+                            android:textColor="@color/black"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/barChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_margin="20dp"
+                            android:background="@drawable/transition"
+                            tools:ignore="MissingClass" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="15dp"
+                            android:text="Stock"
+                            android:textColor="@color/black"
+                            android:textSize="25dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="250dp"
+                            android:text="see all"
+                            android:textColor="#2323C8" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="10dp"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="10dp"
+                            android:text="Stock"
+                            android:textColor="@color/black"
+                            android:textSize="35dp"
+                            android:textStyle="bold|italic" />
+
+                        <Button
+                            android:id="@+id/stockAddBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="130dp"
+                            android:background="@drawable/stock_add"
+                            android:gravity="center"
+                            android:text="+   종목추가하기"
+                            android:textAlignment="center"
+                            android:textColor="#4c6fff"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/stockList"
+                        android:layout_width="match_parent"
+                        android:layout_height="540dp"
+                        android:divider="#ffffff"
+                        android:dividerHeight="4dp" />
 
                 </LinearLayout>
 
-                <ListView
-                    android:id="@+id/stockList"
-                    android:layout_width="match_parent"
-                    android:layout_height="540dp"
-                    android:divider="#ffffff"
-                    android:dividerHeight="4dp" />
-
-            </LinearLayout>
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="640dp">
 
                 <LinearLayout
                     android:id="@+id/Wallpaper"
@@ -399,191 +400,192 @@
                             android:background="#DDDDDD" />
                     </LinearLayout>
                 </LinearLayout>
-            </ScrollView>
-            <LinearLayout
-                android:id="@+id/Settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="10dp"
-                    android:text="Settings"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:textStyle="bold" />
-
 
                 <LinearLayout
+                    android:id="@+id/Settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="Settings"
+                        android:textColor="@color/black"
+                        android:textSize="40dp"
+                        android:textStyle="bold" />
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp">
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="소리 알림"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <Switch
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="220dp" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="소리 알림"
+                                android:text="배경화면 변경시 소리알림 설정"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="380dp"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#DDDDDD" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="15dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="배경 화면"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"
                                 android:textStyle="bold" />
 
-                            <Switch
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="220dp" />
+                                android:text="갤러리에서 선택"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="배경화면 변경시 소리알림 설정"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
+                            android:layout_width="380dp"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#DDDDDD" />
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="380dp"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="8dp"
-                        android:background="#DDDDDD" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="15dp">
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="15dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="배경 화면 반영 간격"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1시간"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
+                        </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="배경 화면"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="갤러리에서 선택"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
+                            android:layout_width="380dp"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#DDDDDD" />
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="380dp"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="8dp"
-                        android:background="#DDDDDD" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="15dp">
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="15dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="배경 화면 반영 시간"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="AM 9 : 00"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
+                        </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="배경 화면 반영 간격"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1시간"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
+                            android:layout_width="380dp"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#DDDDDD" />
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="380dp"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="8dp"
-                        android:background="#DDDDDD" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageButton
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="15dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="배경 화면 반영 시간"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="AM 9 : 00"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="380dp"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="8dp"
-                        android:background="#DDDDDD" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:background="#00ff0000"
+                        android:src="@drawable/logout_button"
+                        android:text="Log out"
+                        android:textSize="15dp" />
                 </LinearLayout>
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:background="#00ff0000"
-                    android:src="@drawable/logout_button"
-                    android:text="Log out"
-                    android:textSize="15dp" />
-            </LinearLayout>
-
-        </FrameLayout>
+            </FrameLayout>
+        </ScrollView>
     </RelativeLayout>
 
 </TabHost>
