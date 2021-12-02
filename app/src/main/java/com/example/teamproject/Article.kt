@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,24 +16,31 @@ import com.google.firebase.database.FirebaseDatabase
 import org.jsoup.Jsoup
 
 class Article : AppCompatActivity() {
-    lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.stock_detail)
+        var stockname : TextView = findViewById<TextView>(R.id.name)
+        var stockNum : TextView = findViewById<TextView>(R.id.count)
+        var print_price : TextView = findViewById<TextView>(R.id.buyprice)
         var button: Button = findViewById<Button>(R.id.article)
-        var stock : ArrayList<Stock> = user.getStock()
-        var stocksize : Int = user.getstockNumber()
-        
+        var modify : Button = findViewById<Button>(R.id.modify)
+
+        var name = intent.getStringExtra("name")
+        var code = intent.getStringExtra("code")
+        var price = intent.getStringExtra("price")?.toInt()
+        var count = intent.getStringExtra("count")?.toInt()
+
+        stockname.setText(name)
+        stockNum.setText(count.toString()+"개")
+        print_price.setText(price.toString()+"원")
         //기사 크롤링
-        /*for () {
-            val url = "https://m.stock.naver.com/index.html#/domestic/stock/"
-            button.setOnClickListener{
-                val openUrl = Intent(Intent.ACTION_VIEW)
-                openUrl.data = Uri.parse(url)
-                startActivity(openUrl)
-            }
-        }*/
+        val url = "https://m.stock.naver.com/index.html#/domestic/stock/"+code+"/news/title"
+        button.setOnClickListener{
+            val openUrl = Intent(Intent.ACTION_VIEW)
+            openUrl.data = Uri.parse(url)
+            startActivity(openUrl)
+        }
 
         //val doc = Jsoup.connect(url).get()
         //val title = doc.title()

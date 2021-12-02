@@ -3,6 +3,7 @@ package com.example.teamproject
 import android.app.AlertDialog
 import android.app.TabActivity
 import android.content.Context
+import android.content.Intent
 import android.icu.util.ULocale.getName
 import android.os.Bundle
 import android.preference.PreferenceActivity
@@ -90,7 +91,14 @@ class Menu : TabActivity() {
 
         stockListView.adapter = adapter
 
-
+        stockListView.setOnItemClickListener { adapterView, view, i, l ->
+            var intent = Intent(this, Article::class.java)
+            intent.putExtra("name", stockList[i].stockName)
+            intent.putExtra("code", stockList[i].stockCode)
+            intent.putExtra("price", stockList[i].stockPrice.toString())
+            intent.putExtra("count", stockList[i].stockNum.toString())
+            startActivity(intent)
+        }
         nameText.text = "안녕하세요," +user.getname()+ "님"
 
         var j : Float
