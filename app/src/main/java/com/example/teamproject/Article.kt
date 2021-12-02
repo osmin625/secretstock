@@ -22,20 +22,24 @@ class Article : AppCompatActivity() {
         setContentView(R.layout.stock_detail)
         var stockname : TextView = findViewById<TextView>(R.id.name)
         var stockNum : TextView = findViewById<TextView>(R.id.count)
-        var print_price : TextView = findViewById<TextView>(R.id.buyprice)
         var button: Button = findViewById<Button>(R.id.article)
         var modify : Button = findViewById<Button>(R.id.modify)
-
-        var name = intent.getStringExtra("name")
-        var code = intent.getStringExtra("code")
-        var price = intent.getStringExtra("price")?.toInt()
-        var count = intent.getStringExtra("count")?.toInt()
-
-        stockname.setText(name)
-        stockNum.setText(count.toString()+"개")
-        print_price.setText(price.toString()+"원")
+        var buyPrice : TextView = findViewById(R.id.buyprice)
+        var currentPrice : TextView = findViewById(R.id.currentprice)
+        var benefit : TextView = findViewById(R.id.benefit)
+        var intent = intent
+        var currentStock = intent.getSerializableExtra("currentStock") as Stock
+        var startStock = intent.getSerializableExtra("startStock") as Stock
+        var buy = startStock.stockPrice / startStock.stockNum
+        var current = currentStock.stockPrice / currentStock.stockNum
+        var stockBenefit = (current - buy) * currentStock.stockNum
+        stockname.setText(currentStock.stockName)
+        stockNum.setText(currentStock.stockNum.toString()+"개")
+        buyPrice.text = buy.toString()
+        currentPrice.text = current.toString()
+        benefit.text = stockBenefit.toString()
         //기사 크롤링
-        val url = "https://m.stock.naver.com/index.html#/domestic/stock/"+code+"/news/title"
+        val url = "https://m.stock.naver.com/index.html#/domestic/stock/"+currentStock.stockCode+"/news/title"
         button.setOnClickListener{
             val openUrl = Intent(Intent.ACTION_VIEW)
             openUrl.data = Uri.parse(url)

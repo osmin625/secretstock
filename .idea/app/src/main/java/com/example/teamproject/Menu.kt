@@ -3,7 +3,6 @@ package com.example.teamproject
 import android.app.AlertDialog
 import android.app.TabActivity
 import android.content.Context
-import android.content.Intent
 import android.icu.util.ULocale.getName
 import android.os.Bundle
 import android.preference.PreferenceActivity
@@ -43,8 +42,6 @@ class Menu : TabActivity() {
     lateinit var resultStockCodeDB:TextView
     lateinit var resultStockNameDB:TextView
     lateinit var stockList : ArrayList<Stock>
-    lateinit var startList : ArrayList<Stock>
-    lateinit var myMoney : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -54,13 +51,11 @@ class Menu : TabActivity() {
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
         var nameText : TextView = findViewById(R.id.nameText)
-        var myMoney = findViewById<TextView>(R.id.myMoneyText)
         var newstockList = mutableListOf<Listviewitem>()
         var stockChangeList : ArrayList<Int>
         var stockChangeNum = user.getChangeNum()
         stockChangeList = user.stockChange
         stockList = user.getStock()
-        startList = user.getstartStock()
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         var adapter = ListViewAdapter(newstockList)
@@ -68,25 +63,19 @@ class Menu : TabActivity() {
             newstockList.add(Listviewitem(i.stockName, i.stockPrice / i.stockNum, i.stockNum))
         }
         stockListView.adapter = adapter
-        myMoney.text = stockChangeList[stockChangeNum-1].toString()+ "원"
         nameText.text = "안녕하세요," +user.getname()+ "님"
         var j : Float
         j = 1.2f
         for (i in 0..stockChangeNum-1)
         {
             entries.add(Entry(j,stockChangeList[i].toFloat()))
-            //Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
+            Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
             j = j+1
         }
 
 
 
-        stockListView.setOnItemClickListener { adapterView, view, i, l ->
-            val intent = Intent(this, Article::class.java)
-            intent.putExtra("currentStock", stockList[i])
-            intent.putExtra("startStock", startList[i])
-            startActivity(intent)
-        }
+
         var tabHost = this.tabHost
 
         var tabSpecChart = tabHost.newTabSpec("Home").setIndicator("",resources.getDrawable(R.drawable.home_selector))
@@ -102,7 +91,7 @@ class Menu : TabActivity() {
         tabHost.addTab(tabSpecWallpaper)
 
         var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("",resources.getDrawable(R.drawable.settings_selector))
-        tabSpecSetting.setContent(R.id.Settings)
+        tabSpecSetting.setContent(R.id.Setting)
         tabHost.addTab(tabSpecSetting)
 
         //var tabSpecTemp = tabHost.newTabSpec("temp").setIndicator("temp")
@@ -197,7 +186,7 @@ class Menu : TabActivity() {
                     val database = FirebaseDatabase.getInstance()
                     var stockNum : Int
                     var stockSum = Integer.parseInt(dlgStockCount.text.toString()) * Integer.parseInt(
-                        dlgStockPrice.text.toString())
+                            dlgStockPrice.text.toString())
                     tempStock = Stock(
                         StockCode,
                         dlgStockName.text.toString(),
@@ -224,7 +213,7 @@ class Menu : TabActivity() {
                 else{
                     Toast.makeText(this, "주식정보를 입력하세요.",Toast.LENGTH_SHORT).show()
                 }
-                //adapter.notifyDataSetChanged()
+            //adapter.notifyDataSetChanged()
                 //toast1.setGravity(Gravity.CENTER, 0, -800)
                 //toast1.show()
             }
