@@ -21,5 +21,4 @@ class Stock :Serializable{
         stockPrice = price
         stockNum = num
     }
-
 }

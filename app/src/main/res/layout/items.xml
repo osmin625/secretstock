@@ -37,7 +37,7 @@
         android:layout_gravity="center"
         android:id="@+id/text3"
         android:textSize="25dp"
-        android:text="보유갯수"
+        android:text="보유개수"
         android:textStyle="bold"/>
 
 

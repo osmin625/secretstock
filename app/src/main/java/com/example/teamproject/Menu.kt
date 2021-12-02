@@ -50,62 +50,28 @@ class Menu : TabActivity() {
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
-        var newstockList = mutableListOf<Listviewitem>()
         var nameText : TextView = findViewById(R.id.nameText)
-        var stockchangelist = ArrayList<Int>()
-        var stockchangenum : Int
-
-        stockchangelist = user.stockChange
-        stockchangenum = user.getChangeNum()
+        var newstockList = mutableListOf<Listviewitem>()
+        var stockChangeList : ArrayList<Int>
+        var stockChangeNum = user.getChangeNum()
+        stockChangeList = user.stockChange
         stockList = user.getStock()
-        tempStock = Stock()
-
-
-        var stockList = mutableListOf<Stock>()
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         var adapter = ListViewAdapter(newstockList)
-
-
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference
-        for (i in 0..user.getstockNumber() - 1){
-            myRef.child("user").child(user.id).child("currentStock").child(i.toString()).get().addOnSuccessListener {
-                Log.i("firebase", "Got value ${it.value}")
-                val stockName = it.child("stockName").value.toString()
-                val stockCode = it.child("stockCode").value.toString()
-                val stockPrice = Integer.parseInt(it.child("stockPrice").value.toString())
-                val stockNum = Integer.parseInt(it.child("stockNum").value.toString())
-                stockList.add(Stock(
-                    stockCode,stockName,stockPrice,stockNum
-                ))
-                if(i == user.getstockNumber() - 1){
-                }
-                newstockList.add(Listviewitem(stockName, stockPrice, stockNum))
-            }.addOnFailureListener{
-                Log.e("firebase", "Error getting data", it)
-            }
-
+        for(i in stockList){
+            newstockList.add(Listviewitem(i.stockName, i.stockPrice / i.stockNum, i.stockNum))
         }
-
         stockListView.adapter = adapter
-
-
         nameText.text = "안녕하세요," +user.getname()+ "님"
-
         var j : Float
         j = 1.2f
-        for (i in 0..stockchangenum-1)
+        for (i in 0..stockChangeNum-1)
         {
-            entries.add(Entry(j,stockchangelist[i].toFloat()))
-            Log.i("stockchangeList", "Got value ${stockchangelist[i]}")
+            entries.add(Entry(j,stockChangeList[i].toFloat()))
+            Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
             j = j+1
         }
-//        entries.add(Entry(1.2f, 20.0f))
-//        entries.add(Entry(2.2f, 70.0f))
-//        entries.add(Entry(3.2f, 30.0f))
-//        entries.add(Entry(4.2f, 90.0f))
-//        entries.add(Entry(5.2f, 70.0f))
 
 
 
@@ -134,7 +100,6 @@ class Menu : TabActivity() {
 
         tabHost.currentTab = 0
 
-
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
             setMaxVisibleValueCount(5) // 최대 보이는 그래프 개수를 5개로 지정
@@ -143,8 +108,8 @@ class Menu : TabActivity() {
             setDrawGridBackground(false)//격자구조 넣을건지
 
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
-                axisMaximum = (stockchangelist[0]*2).toFloat() //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
-                axisMinimum =  0f// 최소값 0
+                axisMaximum = (stockChangeList[0] * 2).toFloat() //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
+                axisMinimum = 0f // 최소값 0
                 granularity = 50f // 50 단위마다 선을 그리려고 설정.
                 setDrawLabels(false) // 값 적는거 허용 (0, 50, 100)
                 //setDrawGridLines(true) //격자 라인 활용
@@ -163,7 +128,7 @@ class Menu : TabActivity() {
                     context,
                     R.color.design_default_color_primary_dark
                 ) // 라벨 텍스트 컬러 설정
-                textSize = 30f //라벨 텍스트 크기
+                textSize = 13f //라벨 텍스트 크기
             }
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
@@ -238,10 +203,12 @@ class Menu : TabActivity() {
                     userRef.child("user").child(user.id).child("stockNumber").setValue(stockNum)
                     //Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
-                    newstockList.add(Listviewitem(tempStock.stockName,tempStock.stockPrice,tempStock.stockNum))
-
+                    newstockList.add(Listviewitem(dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
                     adapter.notifyDataSetChanged()
 
+                }
+                else if(flag == 2){
+                    Toast.makeText(this, "이미 존재하는 주식입니다.",Toast.LENGTH_SHORT).show()
                 }
                 else{
                     Toast.makeText(this, "주식정보를 입력하세요.",Toast.LENGTH_SHORT).show()
@@ -271,13 +238,17 @@ class Menu : TabActivity() {
                     resultStockCodeDB.text = tempStock.stockCode
                     StockCode = tempStock.stockCode
                     flag = 1
+                    for(i in stockList){
+                        if(i.stockCode == StockCode) {
+                            flag = 2
+                        }
+                    }
                 }.addOnFailureListener{
                     Log.e("firebase", "Error getting data", it)
                 }
             }
         }
     }
-
     inner class ListViewAdapter(private val items: MutableList<Listviewitem>): BaseAdapter() {
         override fun getCount(): Int = items.size
         override fun getItem(position: Int): Listviewitem = items[position]
@@ -292,6 +263,7 @@ class Menu : TabActivity() {
             return convertView
         }
     }
+
 
     inner class MyXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("mon", "tue", "wed", "thu", "fri")
