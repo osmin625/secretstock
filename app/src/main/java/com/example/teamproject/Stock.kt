@@ -21,14 +21,5 @@ class Stock :Serializable{
         stockPrice = price
         stockNum = num
     }
-    fun getstockName(): String{
-        return stockName
-    }
-    fun getstockPrice(): Int{
-        return stockPrice
-    }
-    fun getstockNum(): Int{
-        return stockNum
-    }
 
 }
