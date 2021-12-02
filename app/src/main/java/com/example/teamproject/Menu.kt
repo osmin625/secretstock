@@ -213,7 +213,12 @@ class Menu : TabActivity() {
                     user.setstockNumber(stockNum)
                     userRef.child("user").child(user.id).child("stockNumber").setValue(stockNum)
                     //Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
+                    for(i in 0..stockChangeNum - 1){
+                        stockChangeList[i] += stockSum
+                    }
+                    userRef.child("user").child(user.id).child("stockChange").setValue(stockChangeList)
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
+                    myMoney.text = stockChangeList[stockChangeNum-1].toString()+ "원"
                     newstockList.add(Listviewitem(dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
                     adapter.notifyDataSetChanged()
 
