@@ -134,7 +134,7 @@ class Menu : TabActivity() {
         tabHost.addTab(tabSpecWallpaper)
 
         var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("",resources.getDrawable(R.drawable.settings_selector))
-        tabSpecSetting.setContent(R.id.Setting)
+        tabSpecSetting.setContent(R.id.Settings)
         tabHost.addTab(tabSpecSetting)
 
         //var tabSpecTemp = tabHost.newTabSpec("temp").setIndicator("temp")
