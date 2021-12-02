@@ -68,8 +68,11 @@ class Menu : TabActivity() {
             newstockList.add(Listviewitem(i.stockName, i.stockPrice / i.stockNum, i.stockNum))
         }
         stockListView.adapter = adapter
-        myMoney.text = stockChangeList[stockChangeNum-1].toString()+ "원"
-        nameText.text = "안녕하세요," +user.getname()+ "님"
+        if(stockChangeNum > 0)
+        {
+            myMoney.text = stockChangeList[stockChangeNum-1].toString()+ "원"
+        }
+            nameText.text = "안녕하세요," +user.getname()+ "님"
         var j : Float
         j = 1.2f
         for (i in 0..stockChangeNum-1)
@@ -213,12 +216,19 @@ class Menu : TabActivity() {
                     user.setstockNumber(stockNum)
                     userRef.child("user").child(user.id).child("stockNumber").setValue(stockNum)
                     //Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
-                    for(i in 0..stockChangeNum - 1){
-                        stockChangeList[i] += stockSum
+                    if(stockChangeNum == 0){
+                        stockChangeList.add(0,stockSum)
+                        stockChangeNum = 1
+                        userRef.child("user").child(user.id).child("ChangeNum").setValue(stockChangeNum)
                     }
+                    else{
+                        for(i in 0..stockChangeNum - 1){
+                            stockChangeList[i] += stockSum
+                        }
+                    }
+                    myMoney.text = stockChangeList[stockChangeNum - 1].toString() + "원"
                     userRef.child("user").child(user.id).child("stockChange").setValue(stockChangeList)
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
-                    myMoney.text = stockChangeList[stockChangeNum-1].toString()+ "원"
                     newstockList.add(Listviewitem(dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
                     adapter.notifyDataSetChanged()
 
