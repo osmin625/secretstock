@@ -60,7 +60,7 @@ class Menu : TabActivity() {
         var stockChangeNum = user.getChangeNum()
         stockChangeList = user.stockChange
         stockList = user.getStock()
-        startList = user.getstartStock()
+        startList = user.startStock
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         var adapter = ListViewAdapter(newstockList)

@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                     if (pw == value) {
                         val name = it.child("name").value.toString()
                         val stockChange = it.child("stockChange").value as ArrayList<Int>
+                        val date = it.child("date").value as ArrayList<String>
                         val stockNumber = Integer.parseInt(it.child("stockNumber").value.toString())
                         val changeNum = Integer.parseInt(it.child("changeNum").value.toString())
                         val currentStock = ArrayList<Stock>(1)
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                             ))
                         }
                         var user = User(
-                            name, tempId, value, startStock, currentStock, stockChange, stockNumber, changeNum
+                            name, tempId, value, startStock, currentStock, stockChange,date, stockNumber, changeNum
                         )
                         Toast.makeText(this, "${user.getname()}님 환영합니다.", Toast.LENGTH_SHORT).show()
                         var intentMenu = Intent(this, Menu::class.java)

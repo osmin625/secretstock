@@ -59,11 +59,13 @@ class Regist : AppCompatActivity(){
             var startStock = ArrayList<Stock>(20)
             var currentStock = ArrayList<Stock>(20)
             var stockChange = ArrayList<Int>(20)
+            var date = ArrayList<String>(20)
             var changeNum :Int = 0
             var stockNumber : Int = 0
             startStock.add(Stock())
             currentStock.add(Stock())
             stockChange.add(0)
+            date.add("")
 
             if(id.isEmpty() || pw.isEmpty() || pw_ck.isEmpty() || name.isEmpty()){
                 isExistBlank = true
@@ -78,7 +80,7 @@ class Regist : AppCompatActivity(){
             if(!isExistBlank && isPWSame && isExistId){
                 Toast.makeText(this, "회원가입 성공",Toast.LENGTH_SHORT).show()
                 var user : User  = User(
-                    name, id, pw, startStock, currentStock, stockChange,stockNumber, changeNum
+                    name, id, pw, startStock, currentStock, stockChange, date ,stockNumber, changeNum
                 )
                 val database = FirebaseDatabase.getInstance()
                 val myRef = database.getReference("user")

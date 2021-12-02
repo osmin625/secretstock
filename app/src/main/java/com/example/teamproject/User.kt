@@ -11,6 +11,7 @@ class User(
     val startStock: ArrayList<Stock>,
     val currentStock: ArrayList<Stock>,
     val stockChange: ArrayList<Int>,
+    val date : ArrayList<String>,
     private var stockNumber : Int,
     private var changeNum : Int
 ):Serializable{
@@ -19,9 +20,6 @@ class User(
     }
     fun getStock(): ArrayList<Stock>{
         return currentStock
-    }
-    fun getstartStock(): ArrayList<Stock>{
-        return startStock
     }
     fun getstockNumber() : Int{
         return stockNumber
