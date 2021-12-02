@@ -92,13 +92,14 @@ class Menu : TabActivity() {
         stockListView.adapter = adapter
 
         stockListView.setOnItemClickListener { adapterView, view, i, l ->
-            var intent = Intent(this, Article::class.java)
-            intent.putExtra("name", stockList[i].stockName)
-            intent.putExtra("code", stockList[i].stockCode)
-            intent.putExtra("price", stockList[i].stockPrice.toString())
-            intent.putExtra("count", stockList[i].stockNum.toString())
+            val intent = Intent(this, Article::class.java)
+            intent.putExtra("code",stockList[i].stockCode)
+            intent.putExtra("name",stockList[i].stockName)
+            intent.putExtra("price",stockList[i].stockPrice.toString())
+            intent.putExtra("count",stockList[i].stockNum.toString())
             startActivity(intent)
         }
+
         nameText.text = "안녕하세요," +user.getname()+ "님"
 
         var j : Float
