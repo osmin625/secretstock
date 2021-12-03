@@ -8,9 +8,9 @@ class User(
     private var name: String,
     var id: String,
     var password: String,
-    val startStock: ArrayList<Stock>,
-    val currentStock: ArrayList<Stock>,
-    val stockChange: ArrayList<Int>,
+    var startStock: ArrayList<Stock>,
+    var currentStock: ArrayList<Stock>,
+    var stockChange: ArrayList<Int>,
     val date : ArrayList<String>,
     private var stockNumber : Int,
     private var changeNum : Int

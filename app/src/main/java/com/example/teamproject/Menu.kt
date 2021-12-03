@@ -1,5 +1,6 @@
 package com.example.teamproject
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.TabActivity
 import android.content.Context
@@ -31,6 +32,7 @@ import kotlin.collections.HashMap as HashMap
 
 @Suppress("deprecation")
 class Menu : TabActivity() {
+    lateinit var user : User
     lateinit var stockAddBtn: Button
     lateinit var dlgStockName: EditText
     lateinit var dlgStockPrice: EditText
@@ -45,32 +47,35 @@ class Menu : TabActivity() {
     lateinit var stockList : ArrayList<Stock>
     lateinit var startList : ArrayList<Stock>
     lateinit var myMoney : TextView
+    lateinit var adapter : ListViewAdapter
+    lateinit var stockChangeList : ArrayList<Int>
+    var total : Int = 0
+    var newstockList = mutableListOf<Listviewitem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         var intent = intent
-        var user = intent.getSerializableExtra("user") as User
+        user = intent.getSerializableExtra("user") as User
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
         var nameText : TextView = findViewById(R.id.nameText)
         var myMoney = findViewById<TextView>(R.id.myMoneyText)
-        var newstockList = mutableListOf<Listviewitem>()
-        var stockChangeList : ArrayList<Int>
         var stockChangeNum = user.getChangeNum()
         stockChangeList = user.stockChange
+        total = stockChangeList[stockChangeNum-1]
         stockList = user.getStock()
         startList = user.startStock
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
-        var adapter = ListViewAdapter(newstockList)
+        adapter = ListViewAdapter(newstockList)
         for(i in stockList){
             newstockList.add(Listviewitem(i.stockName, i.stockPrice / i.stockNum, i.stockNum))
         }
         stockListView.adapter = adapter
         if(stockChangeNum > 0)
         {
-            myMoney.text = stockChangeList[stockChangeNum-1].toString()+ "원"
+            myMoney.text = total.toString()+ "원"
         }
             nameText.text = "안녕하세요," +user.getname()+ "님"
         var j : Float
@@ -88,7 +93,8 @@ class Menu : TabActivity() {
             val intent = Intent(this, Article::class.java)
             intent.putExtra("currentStock", stockList[i])
             intent.putExtra("startStock", startList[i])
-            startActivity(intent)
+            intent.putExtra("index", i)
+            startActivityForResult(intent,0)
         }
         var tabHost = this.tabHost
 
@@ -198,7 +204,7 @@ class Menu : TabActivity() {
                 //toastText.text = "주식 추가 완료"
                 if(flag == 1) {
                     val database = FirebaseDatabase.getInstance()
-                    var stockNum : Int
+                    var stockNumber : Int
                     var stockSum = Integer.parseInt(dlgStockCount.text.toString()) * Integer.parseInt(
                         dlgStockPrice.text.toString())
                     tempStock = Stock(
@@ -207,14 +213,16 @@ class Menu : TabActivity() {
                         stockSum,
                         Integer.parseInt(dlgStockCount.text.toString())
                     )
-
-                    stockNum = user.getstockNumber()
+                    total += stockSum
+                    stockList.add(tempStock)
+                    startList.add(tempStock)
+                    stockNumber = user.getstockNumber()
                     var userRef= database.getReference()
-                    userRef.child("user").child(user.id).child("startStock").child(stockNum.toString()).setValue(tempStock)
-                    userRef.child("user").child(user.id).child("currentStock").child(stockNum.toString()).setValue(tempStock)
-                    stockNum += 1
-                    user.setstockNumber(stockNum)
-                    userRef.child("user").child(user.id).child("stockNumber").setValue(stockNum)
+                    userRef.child("user").child(user.id).child("startStock").child(stockNumber.toString()).setValue(tempStock)
+                    userRef.child("user").child(user.id).child("currentStock").child(stockNumber.toString()).setValue(tempStock)
+                    stockNumber += 1
+                    user.setstockNumber(stockNumber)
+                    userRef.child("user").child(user.id).child("stockNumber").setValue(stockNumber)
                     //Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
                     if(stockChangeNum == 0){
                         stockChangeList.add(0,stockSum)
@@ -226,15 +234,17 @@ class Menu : TabActivity() {
                             stockChangeList[i] += stockSum
                         }
                     }
-                    myMoney.text = stockChangeList[stockChangeNum - 1].toString() + "원"
+                    myMoney.text = total.toString() + "원"
                     userRef.child("user").child(user.id).child("stockChange").setValue(stockChangeList)
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
                     newstockList.add(Listviewitem(dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
                     adapter.notifyDataSetChanged()
-
                 }
                 else if(flag == 2){
                     Toast.makeText(this, "이미 존재하는 주식입니다.",Toast.LENGTH_SHORT).show()
+                }
+                else if(flag == 3){
+                    Toast.makeText(this, "존재하지 않는 주식입니다.",Toast.LENGTH_SHORT).show()
                 }
                 else{
                     Toast.makeText(this, "주식정보를 입력하세요.",Toast.LENGTH_SHORT).show()
@@ -257,21 +267,25 @@ class Menu : TabActivity() {
                 resultStockCodeDB = dialogView.findViewById(R.id.StockCodeDB)
                 resultStockNameDB = dialogView.findViewById(R.id.StockNameDB)
                 myRef.child("stock").child(tempStockName).get().addOnSuccessListener {
-                    Log.i("firebase", "Got value ${it.value}")
-                    tempStock.stockCode = it.value.toString()
-                    tempStock.stockName = it.key.toString()
-                    resultStockNameDB.text = tempStock.stockName
-                    resultStockCodeDB.text = tempStock.stockCode
-                    StockCode = tempStock.stockCode
+                    //Log.i("firebase", "Got value ${it.value}")
+                    resultStockNameDB.text = it.key.toString()
+                    resultStockCodeDB.text = it.value.toString()
+                    StockCode = it.value.toString()
                     flag = 1
                     for(i in stockList){
+                        Log.i("stockList", "${i.stockCode}")
                         if(i.stockCode == StockCode) {
+                            Log.i("same stock", "${i.stockCode}")
                             flag = 2
                         }
+                    }
+                    if(StockCode.length != 6){
+                        flag = 3
                     }
                 }.addOnFailureListener{
                     Log.e("firebase", "Error getting data", it)
                 }
+                Log.i("firebase", "Got value ${StockCode}")
             }
         }
     }
@@ -297,7 +311,39 @@ class Menu : TabActivity() {
             return days.getOrNull(value.toInt() - 1) ?: value.toString()
         }
     }
-    inner class Setting : PreferenceActivity() {}
+    inner class Setting : PreferenceActivity() {
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            var setupArray = ArrayList<Int>(1)
+            var index = data!!.getIntExtra("index", 0)
+            var sum = data!!.getIntExtra("sum", 0)
+            Log.i("sum", "${sum}")
+            val database = FirebaseDatabase.getInstance()
+            var userRef = database.reference.child("user").child(user.id)
+            var stockNum = user.getstockNumber()
+            var stockchangeNum = user.getChangeNum()
+            stockList.removeAt(index)
+            startList.removeAt(index)
+            Log.i("code", "${stockList}")
+            newstockList.removeAt(index)
+            stockNum -= 1
+            total -= sum
+            myMoney = findViewById(R.id.myMoneyText)
+            myMoney.text = total.toString()
+            setupArray.add(total)
+            user.setstockNumber(stockNum)
+            user.stockChange = setupArray
+            adapter.notifyDataSetChanged()
+            userRef.child("startStock").setValue(startList)
+            userRef.child("currentStock").setValue(stockList)
+            userRef.child("stockNumber").setValue(stockNum)
+            userRef.child("stockChange").setValue(setupArray)
+            userRef.child("changeNum").setValue(1)
+        }
+    }
 }
 
 private fun <E> ArrayList<E>.add(element: EditText?) {

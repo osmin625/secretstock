@@ -1,5 +1,6 @@
 package com.example.teamproject
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.net.Uri
@@ -27,12 +28,15 @@ class Article : AppCompatActivity() {
         var buyPrice : TextView = findViewById(R.id.buyprice)
         var currentPrice : TextView = findViewById(R.id.currentprice)
         var benefit : TextView = findViewById(R.id.benefit)
+        var btnDel : Button = findViewById(R.id.btnStockDel)
         var intent = intent
         var currentStock = intent.getSerializableExtra("currentStock") as Stock
         var startStock = intent.getSerializableExtra("startStock") as Stock
         var buy = startStock.stockPrice / startStock.stockNum
         var current = currentStock.stockPrice / currentStock.stockNum
         var stockBenefit = (current - buy) * currentStock.stockNum
+        var index = 0
+        index = intent.getIntExtra("index", 0)
         stockname.setText(currentStock.stockName)
         stockNum.setText(currentStock.stockNum.toString()+"개")
         buyPrice.text = buy.toString()
@@ -45,6 +49,14 @@ class Article : AppCompatActivity() {
             openUrl.data = Uri.parse(url)
             startActivity(openUrl)
         }
+        btnDel.setOnClickListener {
+            var outIntent = Intent(this, Menu::class.java)
+            outIntent.putExtra("index", index)
+            outIntent.putExtra("sum", currentStock.stockPrice)
+            Log.i("intent","${currentStock.stockPrice}")
+            setResult(Activity.RESULT_OK, outIntent)
+            finish()
+        }
 
         //val doc = Jsoup.connect(url).get()
         //val title = doc.title()
@@ -54,3 +66,4 @@ class Article : AppCompatActivity() {
 
         }
     }
+
