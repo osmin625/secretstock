@@ -27,6 +27,9 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.items.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap as HashMap
 
 
@@ -49,6 +52,7 @@ class Menu : TabActivity() {
     lateinit var myMoney : TextView
     lateinit var adapter : ListViewAdapter
     lateinit var stockChangeList : ArrayList<Int>
+    lateinit var date : ArrayList<String>
     var total : Int = 0
     var newstockList = mutableListOf<Listviewitem>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +70,7 @@ class Menu : TabActivity() {
         total = stockChangeList[stockChangeNum-1]
         stockList = user.getStock()
         startList = user.startStock
+        date = user.date
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         adapter = ListViewAdapter(newstockList)
@@ -220,8 +225,13 @@ class Menu : TabActivity() {
                     stockNumber += 1
                     user.setstockNumber(stockNumber)
                     userRef.child("user").child(user.id).child("stockNumber").setValue(stockNumber)
+                    userRef.child("user").child(user.id).child("date").setValue(date)
                     //Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
                     if(stockChangeNum == 0){
+                        var now = Date()
+                        var sFormat : SimpleDateFormat
+                        sFormat = SimpleDateFormat("yyyy-MM-dd")
+                        date.add(sFormat.format(now))
                         stockChangeList.add(0,stockSum)
                         stockChangeNum = 1
                         userRef.child("user").child(user.id).child("ChangeNum").setValue(stockChangeNum)
@@ -261,12 +271,17 @@ class Menu : TabActivity() {
                 val database = FirebaseDatabase.getInstance()
                 val myRef = database.reference
                 var tempStockName = dlgStockName.text.toString()
+                if(tempStockName == ""){
+                    Toast.makeText(this, "주식정보를 입력하세요.",Toast.LENGTH_SHORT).show()
+                }
                 resultStockCodeDB = dialogView.findViewById(R.id.StockCodeDB)
                 resultStockNameDB = dialogView.findViewById(R.id.StockNameDB)
                 myRef.child("stock").child(tempStockName).get().addOnSuccessListener {
                     //Log.i("firebase", "Got value ${it.value}")
-                    resultStockNameDB.text = it.key.toString()
-                    resultStockCodeDB.text = it.value.toString()
+                    if(tempStockName !="") {
+                        resultStockNameDB.text = it.key.toString()
+                        resultStockCodeDB.text = it.value.toString()
+                    }
                     StockCode = it.value.toString()
                     flag = 1
                     for(i in stockList){
@@ -322,23 +337,34 @@ class Menu : TabActivity() {
             var userRef = database.reference.child("user").child(user.id)
             var stockNum = user.getstockNumber()
             var stockchangeNum = user.getChangeNum()
+            var tempStock = Stock()
+            var newDate = ArrayList<String>(1)
+            var now = Date()
+            var sFormat : SimpleDateFormat
+            sFormat = SimpleDateFormat("yyyy-MM-dd")
             stockList.removeAt(index)
             startList.removeAt(index)
             Log.i("code", "${stockList}")
             newstockList.removeAt(index)
             stockNum -= 1
             total -= sum
+            newDate.add(sFormat.format(now))
             myMoney = findViewById(R.id.myMoneyText)
             myMoney.text = total.toString()
             setupArray.add(total)
             user.setstockNumber(stockNum)
             user.stockChange = setupArray
             adapter.notifyDataSetChanged()
+            if(stockNum == 0){
+                startList.add(tempStock)
+                stockList.add(tempStock)
+            }
             userRef.child("startStock").setValue(startList)
             userRef.child("currentStock").setValue(stockList)
             userRef.child("stockNumber").setValue(stockNum)
             userRef.child("stockChange").setValue(setupArray)
             userRef.child("changeNum").setValue(1)
+            userRef.child("date").setValue(newDate)
         }
     }
 }
