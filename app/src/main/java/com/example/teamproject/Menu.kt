@@ -41,7 +41,7 @@ class Menu : TabActivity() {
     lateinit var dialogView: View
     lateinit var stockListView: ListView
     lateinit var tempStock: Stock
-    lateinit var stockSearchBtn: Button
+    lateinit var stockSearchBtn: ImageButton
     lateinit var resultStockCodeDB:TextView
     lateinit var resultStockNameDB:TextView
     lateinit var stockList : ArrayList<Stock>
@@ -190,9 +190,8 @@ class Menu : TabActivity() {
             var flag = 0
             var StockCode = ""
             dialogView = View.inflate(this@Menu, R.layout.addstock, null)
-            stockSearchBtn = dialogView.findViewById<Button>(R.id.stockSearchBtn)
+            stockSearchBtn = dialogView.findViewById<ImageButton>(R.id.stockSearchBtn)
             var dlg = AlertDialog.Builder(this@Menu)
-            dlg.setTitle("주식 정보 입력")
             dlg.setView(dialogView)
             dlgStockName = dialogView.findViewById<EditText>(R.id.StockName)
             dlgStockPrice = dialogView.findViewById<EditText>(R.id.StockPrice)
