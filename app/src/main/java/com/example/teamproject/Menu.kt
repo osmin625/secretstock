@@ -59,7 +59,7 @@ class Menu : TabActivity() {
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
-        var nameText : TextView = findViewById(R.id.nameText)
+        var nameText: TextView = findViewById(R.id.nameText)
         var myMoney = findViewById<TextView>(R.id.myMoneyText)
         var stockChangeNum = user.getChangeNum()
         stockChangeList = user.stockChange
@@ -80,14 +80,11 @@ class Menu : TabActivity() {
             nameText.text = "안녕하세요," +user.getname()+ "님"
         var j : Float
         j = 1.2f
-        for (i in 0..stockChangeNum-1)
-        {
-            entries.add(Entry(j,stockChangeList[i].toFloat()))
+        for (i in 0..stockChangeNum - 1) {
+            entries.add(Entry(j, stockChangeList[i].toFloat()))
             //Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
-            j = j+1
+            j = j + 1
         }
-
-
 
         stockListView.setOnItemClickListener { adapterView, view, i, l ->
             val intent = Intent(this, Article::class.java)
@@ -98,19 +95,23 @@ class Menu : TabActivity() {
         }
         var tabHost = this.tabHost
 
-        var tabSpecChart = tabHost.newTabSpec("Home").setIndicator("",resources.getDrawable(R.drawable.home_selector))
+        var tabSpecChart = tabHost.newTabSpec("Home")
+            .setIndicator("", resources.getDrawable(R.drawable.home_selector))
         tabSpecChart.setContent(R.id.Home)
         tabHost.addTab(tabSpecChart)
 
-        var tabSpecStock = tabHost.newTabSpec("Stock").setIndicator("",resources.getDrawable(R.drawable.stock_selector))
+        var tabSpecStock = tabHost.newTabSpec("Stock")
+            .setIndicator("", resources.getDrawable(R.drawable.stock_selector))
         tabSpecStock.setContent(R.id.Stock)
         tabHost.addTab(tabSpecStock)
 
-        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper").setIndicator("",resources.getDrawable(R.drawable.wallpaper_selector))
+        var tabSpecWallpaper = tabHost.newTabSpec("Wallpaper")
+            .setIndicator("", resources.getDrawable(R.drawable.wallpaper_selector))
         tabSpecWallpaper.setContent(R.id.Wallpaper)
         tabHost.addTab(tabSpecWallpaper)
 
-        var tabSpecSetting = tabHost.newTabSpec("Setting").setIndicator("",resources.getDrawable(R.drawable.settings_selector))
+        var tabSpecSetting = tabHost.newTabSpec("Setting")
+            .setIndicator("", resources.getDrawable(R.drawable.settings_selector))
         tabSpecSetting.setContent(R.id.Settings)
         tabHost.addTab(tabSpecSetting)
 
@@ -184,9 +185,6 @@ class Menu : TabActivity() {
             invalidate()
         }
 
-//        stockListView.setOnClickListener{parent, view, position, id ->
-//            Toast.makeText(applicationContext, stockList[position, to])
-//        }
 
         stockAddBtn.setOnClickListener {
             var flag = 0
