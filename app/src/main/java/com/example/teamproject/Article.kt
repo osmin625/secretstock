@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,7 @@ class Article : AppCompatActivity() {
         var buy = startStock.stockPrice / startStock.stockNum
         var current = currentStock.stockPrice / currentStock.stockNum
         var stockBenefit = (current - buy) * currentStock.stockNum
+        var btnClose : ImageButton = findViewById(R.id.dtCloseBtn)
         var index = 0
         index = intent.getIntExtra("index", 0)
         stockname.setText(currentStock.stockName)
@@ -55,6 +57,9 @@ class Article : AppCompatActivity() {
             outIntent.putExtra("sum", currentStock.stockPrice)
             Log.i("intent","${currentStock.stockPrice}")
             setResult(Activity.RESULT_OK, outIntent)
+            finish()
+        }
+        btnClose.setOnClickListener {
             finish()
         }
 
