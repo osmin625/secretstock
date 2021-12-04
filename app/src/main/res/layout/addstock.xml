@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="120dp"
             android:text="주식 정보 입력"
             android:textColor="@color/black"
@@ -35,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
         android:text="주식 종목 검색"
         android:textColor="@color/black" />
 
@@ -70,21 +71,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="20dp"
+        android:textColor="#BCBCBC"
         android:text="종목코드 " />
 
-    <TextView
-        android:id="@+id/StockNameDB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
-        android:text="종목이름 " />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:text="종목 정보 추가"
         android:textColor="@color/black" />
 

@@ -4,41 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/item_background"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall" >
+    android:textAppearance="?android:attr/textAppearanceListItemSmall">
 
     <TextView
+        android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text1"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@color/black"
         android:text="주식이름"
         android:textSize="25dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:textStyle="bold"/>
-
-    <TextView
+        android:textStyle="bold" />
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/text2"
-        android:textSize="25dp"
-        android:layout_gravity="center"
-        android:text="가격"
-        android:textStyle="bold"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#707070"
+            android:layout_gravity="center"
+            android:text="보유개수"
+            android:textSize="20dp"
+           />
+        <TextView
+            android:id="@+id/item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#707070"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:text="가격"
+            android:textSize="20dp"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:id="@+id/text3"
-        android:textSize="25dp"
-        android:text="보유개수"
-        android:textStyle="bold"/>
 
-
+    </LinearLayout>
 </LinearLayout>

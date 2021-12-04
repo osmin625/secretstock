@@ -46,7 +46,6 @@ class Menu : TabActivity() {
     lateinit var stockListView: ListView
     lateinit var tempStock: Stock
     lateinit var resultStockCodeDB:TextView
-    lateinit var resultStockNameDB:TextView
     lateinit var stockList : ArrayList<Stock>
     lateinit var startList : ArrayList<Stock>
     lateinit var myMoney : TextView
@@ -221,11 +220,9 @@ class Menu : TabActivity() {
                     Toast.makeText(this, "주식정보를 입력하세요.",Toast.LENGTH_SHORT).show()
                 }
                 resultStockCodeDB = mAlertDialog.StockCodeDB
-                resultStockNameDB = mAlertDialog.StockNameDB
                 myRef.child("stock").child(tempStockName).get().addOnSuccessListener {
                     //Log.i("firebase", "Got value ${it.value}")
                     if(tempStockName !="") {
-                        resultStockNameDB.text = it.key.toString()
                         resultStockCodeDB.text = it.value.toString()
                     }
                     StockCode = it.value.toString()
@@ -389,9 +386,9 @@ class Menu : TabActivity() {
             var convertView = view
             if (convertView == null) convertView = LayoutInflater.from(parent?.context).inflate(R.layout.items, parent, false)
             val item: Listviewitem = items[position]
-            convertView!!.text1.text = item.name
-            convertView.text2.text = item.price.toString()
-            convertView.text3.text = item.num.toString()
+            convertView!!.item_name.text = item.name
+            convertView.item_price.text = item.price.toString()
+            convertView.item_count.text = item.num.toString()
             return convertView
         }
     }

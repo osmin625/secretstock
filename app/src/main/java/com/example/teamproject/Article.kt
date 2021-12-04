@@ -76,7 +76,6 @@ class Article : AppCompatActivity() {
             var dlg = AlertDialog.Builder(this@Article)
             EditModify = dialogView.findViewById(R.id.EditModify)
             EditModifyPrice = dialogView.findViewById(R.id.EditModifyPrice)
-            dlg.setTitle("주식 수정")
             dlg.setView(dialogView)
             dlg.setPositiveButton("수정") { dialog, which ->
                 var editNum = Integer.parseInt(EditModify.text.toString())
