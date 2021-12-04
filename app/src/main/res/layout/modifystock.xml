@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/modifyStock">
+    <EditText
+        android:id="@+id/EditModify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="변경할 주식 개수(변경된 총 주식 개수)"/>
+    <EditText
+        android:id="@+id/EditModifyPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="변경할 주식 가격(얼마에 사고 팔건지)"/>
+</LinearLayout>

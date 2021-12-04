@@ -83,7 +83,7 @@ class Menu : TabActivity() {
         {
             myMoney.text = total.toString()+ "원"
         }
-            nameText.text = "안녕하세요," +user.getname()+ "님"
+        nameText.text = "안녕하세요," +user.getname()+ "님"
         var j : Float
         j = 1.2f
         for (i in 0..stockChangeNum - 1) {
@@ -445,6 +445,35 @@ class Menu : TabActivity() {
             userRef.child("stockChange").setValue(setupArray)
             userRef.child("changeNum").setValue(1)
             userRef.child("date").setValue(newDate)
+        }
+        if(resultCode == Activity.RESULT_FIRST_USER){ // 수정했을때
+            var index = data!!.getIntExtra("index", 0)
+            var startStock = data.getSerializableExtra("startStock") as Stock
+            var currentStock = data.getSerializableExtra("currentStock") as Stock
+            var modStockChange = ArrayList<Int>(1)
+            var modDate = ArrayList<String>(1)
+            var sumStart = startStock.stockPrice - startList[index].stockPrice
+            var sumCurrent = currentStock.stockPrice - stockList[index].stockPrice
+            var now = Date()
+            var sFormat : SimpleDateFormat
+            myMoney = findViewById(R.id.myMoneyText)
+            val database = FirebaseDatabase.getInstance()
+            var userRef = database.reference.child("user").child(user.id)
+            sFormat = SimpleDateFormat("yyyy-MM-dd")
+            startList[index] = startStock
+            stockList[index] = currentStock
+            modStockChange.add(stockChangeList[0] + sumStart)
+            modStockChange.add(stockChangeList[user.getstockNumber() - 1] + sumCurrent)
+            modDate.add(date[0])
+            modDate.add(sFormat.format(now))
+            userRef.child("date").setValue(modDate)
+            userRef.child("stockChange").setValue(modStockChange)
+            userRef.child("startStock").setValue(startList)
+            userRef.child("currentStock").setValue(stockList)
+            userRef.child("changeNum").setValue(2)
+            myMoney.text = (total + sumCurrent).toString()
+            newstockList.set(index, Listviewitem(stockList[index].stockName, stockList[index].stockPrice / stockList[index].stockNum, stockList[index].stockNum))
+            adapter.notifyDataSetChanged()
         }
     }
 }
