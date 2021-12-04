@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="227dp"
+            android:layout_marginLeft="187dp"
             android:background="#00ff0000"
             android:src="@drawable/dlg_searchbtn" />
     </LinearLayout>
