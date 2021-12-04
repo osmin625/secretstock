@@ -37,6 +37,7 @@ import kotlin.collections.HashMap as HashMap
 class Menu : TabActivity() {
     lateinit var user : User
     lateinit var stockAddBtn: Button
+    lateinit var logoutbtn: ImageButton
     lateinit var dlgStockName: EditText
     lateinit var dlgStockPrice: EditText
     lateinit var dlgStockCount: EditText
@@ -61,6 +62,7 @@ class Menu : TabActivity() {
         var intent = intent
         user = intent.getSerializableExtra("user") as User
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
+        var logoutbtn = findViewById<ImageButton>(R.id.logoutbtn)
         var barChart: LineChart = findViewById(R.id.barChart)
         val entries = ArrayList<Entry>()
         var nameText: TextView = findViewById(R.id.nameText)
@@ -190,6 +192,11 @@ class Menu : TabActivity() {
             invalidate()
         }
 
+
+        logoutbtn.setOnClickListener {
+            Toast.makeText(this, "로그아웃",Toast.LENGTH_SHORT).show()
+            finish()
+        }
 
         stockAddBtn.setOnClickListener {
             var flag = 0
