@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.addstock.view.*
 import kotlin.collections.HashMap as HashMap
 
 
+
 @Suppress("deprecation")
 class Menu : TabActivity() {
     lateinit var user : User
@@ -75,7 +76,7 @@ class Menu : TabActivity() {
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         adapter = ListViewAdapter(newstockList)
         for(i in stockList){
-            newstockList.add(Listviewitem(i.stockName, i.stockPrice / i.stockNum, i.stockNum))
+            newstockList.add(Listviewitem(i.stockCode, i.stockName, i.stockPrice / i.stockNum, i.stockNum))
         }
         stockListView.adapter = adapter
         if(stockChangeNum > 0)
@@ -285,7 +286,7 @@ class Menu : TabActivity() {
                     myMoney.text = total.toString() + "원"
                     userRef.child("user").child(user.id).child("stockChange").setValue(stockChangeList)
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
-                    newstockList.add(Listviewitem(dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
+                    newstockList.add(Listviewitem(StockCode, dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
                     adapter.notifyDataSetChanged()
 
                     j = 1.2f
@@ -386,7 +387,8 @@ class Menu : TabActivity() {
             var convertView = view
             if (convertView == null) convertView = LayoutInflater.from(parent?.context).inflate(R.layout.items, parent, false)
             val item: Listviewitem = items[position]
-            convertView!!.item_name.text = item.name
+            convertView!!.item_code.text = item.code
+            convertView.item_name.text = item.name
             convertView.item_price.text = item.price.toString()
             convertView.item_count.text = item.num.toString()
             return convertView
@@ -469,7 +471,7 @@ class Menu : TabActivity() {
             userRef.child("currentStock").setValue(stockList)
             userRef.child("changeNum").setValue(2)
             myMoney.text = (total + sumCurrent).toString()
-            newstockList.set(index, Listviewitem(stockList[index].stockName, stockList[index].stockPrice / stockList[index].stockNum, stockList[index].stockNum))
+            newstockList.set(index, Listviewitem(stockList[index].stockCode,stockList[index].stockName, stockList[index].stockPrice / stockList[index].stockNum, stockList[index].stockNum))
             adapter.notifyDataSetChanged()
         }
     }
