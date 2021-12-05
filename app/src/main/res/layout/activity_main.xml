@@ -2,78 +2,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/rounded_corner3"
-    android:layout_marginTop="50dp"
-    android:layout_marginBottom="50dp"
     android:layout_marginLeft="10dp"
+    android:layout_marginTop="100dp"
     android:layout_marginRight="10dp"
-    android:elevation="10dp"
-    android:weightSum="10">
+    android:layout_marginBottom="250dp"
+    android:background="@drawable/login"
+    android:orientation="vertical">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="5"/>
-    <EditText
-        android:layout_width="350dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner2"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="83dp"
+        android:text="id" />
+
+    <EditText
         android:id="@+id/idedt1"
-        android:text=""
-        android:hint="    아이디를 입력해주세요"
-        android:textSize="20dp"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="password" />
 
     <EditText
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner2"
         android:id="@+id/idedt2"
-        android:hint="    비밀번호를 입력해주세요"
-        android:text=""
-        android:inputType="textPassword"
-        android:textSize="20dp"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="30dp"
-        />
+        android:background="@android:color/transparent"
+        android:inputType="textPassword"
+        android:textSize="15dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:text="Log"
-            android:textSize="15dp"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_corner"
-            android:layout_weight="1"
-            android:layout_margin="10dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btnSign"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_corner"
-            android:text="Reg"
-            android:textSize="15dp"
-            android:layout_weight="1"
-            android:layout_margin="10dp"/>
+            <ImageButton
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/login_btn" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Log in"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                />
+        </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="혹시 아이디가 없으신가요?"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                />
+
+            <Button
+                android:id="@+id/btnSign"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:text="@string/button_name"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="0dp"
         android:layout_height="10dp"
-        android:layout_weight="2"
-        />
+        android:layout_weight="2" />
 
 </LinearLayout>

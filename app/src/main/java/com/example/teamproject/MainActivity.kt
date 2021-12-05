@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var btnLogin = findViewById<Button>(R.id.btnLogin)
+        var btnLogin = findViewById<ImageButton>(R.id.btnLogin)
         var btnSign = findViewById<Button>(R.id.btnSign)
         var idedt1 = findViewById<EditText>(R.id.idedt1)
         var idedt2 = findViewById<EditText>(R.id.idedt2)
