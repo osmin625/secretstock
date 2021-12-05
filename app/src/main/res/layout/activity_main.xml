@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="83dp"
-        android:text="id" />
+        android:text="Id" />
 
     <EditText
         android:id="@+id/idedt1"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="20dp"
-        android:text="password" />
+        android:text="Password" />
 
     <EditText
         android:id="@+id/idedt2"
@@ -98,10 +98,5 @@
                 />
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_weight="2" />
 
 </LinearLayout>
