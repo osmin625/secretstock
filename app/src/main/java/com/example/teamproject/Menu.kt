@@ -53,7 +53,9 @@ class Menu : TabActivity() {
     lateinit var adapter : ListViewAdapter
     lateinit var stockChangeList : ArrayList<Int>
     lateinit var date : ArrayList<String>
+    lateinit var email : TextView
     var total : Int = 0
+    var startTotal : Int = 0
     var newstockList = mutableListOf<Listviewitem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,11 +71,14 @@ class Menu : TabActivity() {
         var stockChangeNum = user.getChangeNum()
         stockChangeList = user.stockChange
         total = stockChangeList[stockChangeNum-1]
+        startTotal = stockChangeList[0]
         stockList = user.getStock()
         startList = user.startStock
         date = user.date
         tempStock = Stock()
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
+        email = findViewById(R.id.email_connect)
+        email.text = user.id + "@gmail.com"
         adapter = ListViewAdapter(newstockList)
         for(i in stockList){
             newstockList.add(Listviewitem(i.stockCode, i.stockName, i.stockPrice / i.stockNum, i.stockNum))
@@ -258,6 +263,7 @@ class Menu : TabActivity() {
                         Integer.parseInt(dlgStockCount.text.toString())
                     )
                     total += stockSum
+                    startTotal += stockSum
                     stockList.add(tempStock)
                     startList.add(tempStock)
                     stockNumber = user.getstockNumber()
@@ -411,7 +417,7 @@ class Menu : TabActivity() {
             var setupArray = ArrayList<Int>(1)
             var index = data!!.getIntExtra("index", 0)
             var sum = data!!.getIntExtra("sum", 0)
-            Log.i("sum", "${sum}")
+            //Log.i("sum", "${sum}")
             val database = FirebaseDatabase.getInstance()
             var userRef = database.reference.child("user").child(user.id)
             var stockNum = user.getstockNumber()
@@ -420,17 +426,22 @@ class Menu : TabActivity() {
             var newDate = ArrayList<String>(1)
             var now = Date()
             var sFormat : SimpleDateFormat
+            var stockName = stockList[index].stockName
             sFormat = SimpleDateFormat("yyyy-MM-dd")
+            total -= sum
+            startTotal -= startList[index].stockPrice
+            Log.i("startSum", "${startTotal}")
+            setupArray.add(startTotal)
+            setupArray.add(total)
+            newDate.add(date[0])
+            newDate.add(sFormat.format(now))
             stockList.removeAt(index)
             startList.removeAt(index)
-            Log.i("code", "${stockList}")
+            //Log.i("code", "${stockList}")
             newstockList.removeAt(index)
             stockNum -= 1
-            total -= sum
-            newDate.add(sFormat.format(now))
             myMoney = findViewById(R.id.myMoneyText)
             myMoney.text = total.toString()
-            setupArray.add(total)
             user.setstockNumber(stockNum)
             user.stockChange = setupArray
             adapter.notifyDataSetChanged()
@@ -444,6 +455,7 @@ class Menu : TabActivity() {
             userRef.child("stockChange").setValue(setupArray)
             userRef.child("changeNum").setValue(1)
             userRef.child("date").setValue(newDate)
+            Toast.makeText(this, "${stockName}이/가 삭제되었습니다.",Toast.LENGTH_SHORT).show()
         }
         if(resultCode == Activity.RESULT_FIRST_USER){ // 수정했을때
             var index = data!!.getIntExtra("index", 0)
@@ -462,7 +474,7 @@ class Menu : TabActivity() {
             startList[index] = startStock
             stockList[index] = currentStock
             modStockChange.add(stockChangeList[0] + sumStart)
-            modStockChange.add(stockChangeList[user.getstockNumber() - 1] + sumCurrent)
+            modStockChange.add(stockChangeList[user.getChangeNum() - 1] + sumCurrent)
             modDate.add(date[0])
             modDate.add(sFormat.format(now))
             userRef.child("date").setValue(modDate)
@@ -470,9 +482,12 @@ class Menu : TabActivity() {
             userRef.child("startStock").setValue(startList)
             userRef.child("currentStock").setValue(stockList)
             userRef.child("changeNum").setValue(2)
-            myMoney.text = (total + sumCurrent).toString()
+            total += sumCurrent
+            startTotal += sumStart
+            myMoney.text = total.toString()
             newstockList.set(index, Listviewitem(stockList[index].stockCode,stockList[index].stockName, stockList[index].stockPrice / stockList[index].stockNum, stockList[index].stockNum))
             adapter.notifyDataSetChanged()
+            Toast.makeText(this, "${stockList[index].stockName}이/가 수정되었습니다.",Toast.LENGTH_SHORT).show()
         }
     }
 }

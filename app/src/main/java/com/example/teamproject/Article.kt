@@ -88,6 +88,7 @@ class Article : AppCompatActivity() {
                     currentStock.stockNum = editNum
                     if(editNum >= startStock.stockNum){
                         startStock.stockPrice += (editNum - startStock.stockNum) * editPrice
+                        //Toast.makeText(this, "${(editNum - startStock.stockNum) * editPrice}만큼 추가됨.",Toast.LENGTH_SHORT).show()
                     }
                     else{
                         startStock.stockPrice -= (startStock.stockNum - editNum) * buy
