@@ -194,6 +194,7 @@ class Menu : TabActivity() {
             applicationContext!!,
             R.color.design_default_color_primary_dark
         ) // 바 그래프 색 설정
+        set.lineWidth = 3f
 
         val dataSet: ArrayList<ILineDataSet> = ArrayList()
         dataSet.add(set)
@@ -368,6 +369,7 @@ class Menu : TabActivity() {
                         applicationContext!!,
                         R.color.design_default_color_primary_dark
                     ) // 바 그래프 색 설정
+                    set.lineWidth = 3f
 
                     val dataSet: ArrayList<ILineDataSet> = ArrayList()
                     dataSet.add(set)
