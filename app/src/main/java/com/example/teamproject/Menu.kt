@@ -56,6 +56,8 @@ class Menu : TabActivity() {
     lateinit var email : TextView
     var total : Int = 0
     var startTotal : Int = 0
+    var max : Float = 0f
+    var min : Float = 1000000000f
     var newstockList = mutableListOf<Listviewitem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,12 +92,19 @@ class Menu : TabActivity() {
         }
         nameText.text = "안녕하세요," +user.getname()+ "님"
         var j : Float
+
         j = 1.2f
+
         for (i in 0..stockChangeNum - 1) {
-            entries.add(Entry(j, stockChangeList[i].toFloat()))
+            entries.add(Entry(j, stockChangeList[i]/10000.toFloat()))
             //Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
+            if(max < stockChangeList[i].toFloat())
+                max = stockChangeList[i].toFloat()
+            if(min > stockChangeList[i].toFloat())
+                min = stockChangeList[i].toFloat()
             j = j + 1
         }
+
 
         stockListView.setOnItemClickListener { adapterView, view, i, l ->
             val intent = Intent(this, Article::class.java)
@@ -134,16 +143,16 @@ class Menu : TabActivity() {
 
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
-            setMaxVisibleValueCount(5) // 최대 보이는 그래프 개수를 5개로 지정
+            setMaxVisibleValueCount(stockChangeNum-1) // 최대 보이는 그래프 개수를 5개로 지정
             setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
             //setDrawLineShadow(false) //그래프의 그림자
             setDrawGridBackground(false)//격자구조 넣을건지
 
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
-                axisMaximum = (stockChangeList[0] * 2).toFloat() //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
-                axisMinimum = 0f // 최소값 0
-                granularity = 50f // 50 단위마다 선을 그리려고 설정.
-                setDrawLabels(false) // 값 적는거 허용 (0, 50, 100)
+                axisMaximum = (max/10000*1.2f) //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
+                axisMinimum = (min/10000*0.8f) // 최소값 0
+                granularity = 20f // 50 단위마다 선을 그리려고 설정.
+                setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
                 //setDrawGridLines(true) //격자 라인 활용
                 setDrawAxisLine(false) // 축 그리기 설정
                 setDrawZeroLine(false)
@@ -160,7 +169,7 @@ class Menu : TabActivity() {
                     context,
                     R.color.design_default_color_primary_dark
                 ) // 라벨 텍스트 컬러 설정
-                textSize = 13f //라벨 텍스트 크기
+                textSize = 8f //라벨 텍스트 크기
             }
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
@@ -185,6 +194,7 @@ class Menu : TabActivity() {
             applicationContext!!,
             R.color.design_default_color_primary_dark
         ) // 바 그래프 색 설정
+        set.lineWidth = 3f
 
         val dataSet: ArrayList<ILineDataSet> = ArrayList()
         dataSet.add(set)
@@ -284,11 +294,6 @@ class Menu : TabActivity() {
                         stockChangeNum = 1
                         userRef.child("user").child(user.id).child("ChangeNum").setValue(stockChangeNum)
                     }
-                    else{
-                        for(i in 0..stockChangeNum - 1){
-                            stockChangeList[i] += stockSum
-                        }
-                    }
                     myMoney.text = total.toString() + "원"
                     userRef.child("user").child(user.id).child("stockChange").setValue(stockChangeList)
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
@@ -296,24 +301,33 @@ class Menu : TabActivity() {
                     adapter.notifyDataSetChanged()
 
                     j = 1.2f
+                    max = 0f
+                    min = 10000000000f
                     entries.clear()
+
                     for (i in 0..stockChangeNum - 1) {
                         entries.add(Entry(j, stockChangeList[i].toFloat()))
+                        //Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
+                        if(max < stockChangeList[i].toFloat())
+                            max = stockChangeList[i].toFloat()
+                        if(min > stockChangeList[i].toFloat())
+                            min = stockChangeList[i].toFloat()
                         j = j + 1
                     }
 
+
                     barChart.run {
                         description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
-                        setMaxVisibleValueCount(5) // 최대 보이는 그래프 개수를 5개로 지정
+                        setMaxVisibleValueCount(stockChangeNum-1) // 최대 보이는 그래프 개수를 5개로 지정
                         setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
                         //setDrawLineShadow(false) //그래프의 그림자
                         setDrawGridBackground(false)//격자구조 넣을건지
 
                         axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
-                            axisMaximum = (stockChangeList[0] * 2).toFloat() //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
-                            axisMinimum = 0f // 최소값 0
-                            granularity = 50f // 50 단위마다 선을 그리려고 설정.
-                            setDrawLabels(false) // 값 적는거 허용 (0, 50, 100)
+                            axisMaximum = (max/10000*1.2f) //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
+                            axisMinimum = (min/10000*0.8f) // 최소값 0
+                            granularity = 20f // 50 단위마다 선을 그리려고 설정.
+                            setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
                             //setDrawGridLines(true) //격자 라인 활용
                             setDrawAxisLine(false) // 축 그리기 설정
                             setDrawZeroLine(false)
@@ -330,7 +344,7 @@ class Menu : TabActivity() {
                                 context,
                                 R.color.design_default_color_primary_dark
                             ) // 라벨 텍스트 컬러 설정
-                            textSize = 13f //라벨 텍스트 크기
+                            textSize = 8f //라벨 텍스트 크기
                         }
                         xAxis.run {
                             position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
@@ -355,13 +369,15 @@ class Menu : TabActivity() {
                         applicationContext!!,
                         R.color.design_default_color_primary_dark
                     ) // 바 그래프 색 설정
+                    set.lineWidth = 3f
 
                     val dataSet: ArrayList<ILineDataSet> = ArrayList()
                     dataSet.add(set)
                     val data = LineData(dataSet)
                     //data. = 0.3f //막대 너비 설정
                     barChart.run {
-                        this.data = data //차트의 데이터를 data로 설정해줌
+                        this.data = data //차트의 데이터를 data로 설정해줌.
+                        //setFitBars(true)
                         invalidate()
                     }
 
