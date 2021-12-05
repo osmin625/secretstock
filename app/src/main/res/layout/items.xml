@@ -15,9 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:textColor="@color/black"
-        android:text="주식이름"
+        android:text="종목명"
         android:textSize="25dp"
         android:textStyle="bold" />
     <LinearLayout
@@ -29,11 +29,10 @@
             android:id="@+id/item_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:textColor="#707070"
             android:layout_gravity="center"
-            android:text="보유개수"
+            android:text="00000000"
             android:textSize="20dp"
            />
         <TextView
@@ -42,9 +41,8 @@
             android:layout_height="wrap_content"
             android:textColor="#707070"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"
-            android:text="가격"
+            android:text="00000000"
             android:textSize="20dp"
             />
 
