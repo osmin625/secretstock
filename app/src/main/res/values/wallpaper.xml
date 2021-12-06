@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="nature">
+        <item>@drawable/nature0</item>
+        <item>@drawable/nature1</item>
+        <item>@drawable/nature2</item>
+        <item>@drawable/nature3</item>
+        <item>@drawable/nature4</item>
+    </integer-array>
+
+    <integer-array name="origin">
+        <item>@drawable/original</item>
+        <item>@drawable/original1</item>
+        <item>@drawable/original2</item>
+        <item>@drawable/original3</item>
+        <item>@drawable/original4</item>
+    </integer-array>
+</resources>

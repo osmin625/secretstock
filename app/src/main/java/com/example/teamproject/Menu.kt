@@ -229,7 +229,8 @@ class Menu : TabActivity() {
         val nature: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.nature)
         val original: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.original)
         val wallpaperManager = WallpaperManager.getInstance(baseContext)
-
+        val naturewall= resources.obtainTypedArray(R.array.nature)
+        val originwall = resources.obtainTypedArray(R.array.origin)
         naturebutton.setOnClickListener {
             wallpaperManager.setBitmap(nature)
             if (notifysound.isChecked == true) mediaplayer.start()
