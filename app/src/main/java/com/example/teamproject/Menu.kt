@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.text.Layout
 import android.util.Log
+import android.app.WallpaperManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import androidx.core.content.ContextCompat
+import android.media.MediaPlayer
 import com.github.mikephil.charting.charts.BarChart
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
@@ -35,11 +37,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.addstock.*
 import kotlinx.android.synthetic.main.addstock.view.*
 import kotlin.collections.HashMap as HashMap
-
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 
 
 @Suppress("deprecation")
 class Menu : TabActivity() {
+    lateinit var naturebutton : ImageButton
+    lateinit var originalbutton : ImageButton
+    lateinit var notifysound : Switch
+    lateinit var gallery : TextView
     lateinit var user : User
     lateinit var stockAddBtn: Button
     lateinit var logoutbtn: ImageButton
@@ -162,7 +169,6 @@ class Menu : TabActivity() {
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
                 axisMaximum = (max/10000*1.2f) //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
                 axisMinimum = (min/10000*0.8f) // 최소값 0
-                granularity = 20f // 50 단위마다 선을 그리려고 설정.
                 setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
                 //setDrawGridLines(true) //격자 라인 활용
                 setDrawAxisLine(false) // 축 그리기 설정
@@ -193,7 +199,6 @@ class Menu : TabActivity() {
                     R.color.design_default_color_primary_dark
                 ) //라벨 색상
                 textSize = 12f // 텍스트 크기
-                valueFormatter = MyXAxisFormatter() // X축 라벨값(밑에 표시되는 글자) 바꿔주기 위해 설정
             }
             axisRight.isEnabled = false // 오른쪽 Y축을 안보이게 해줌.
             setTouchEnabled(false) // 그래프 터치해도 아무 변화없게 막음
@@ -217,7 +222,32 @@ class Menu : TabActivity() {
             //setFitBars(true)
             invalidate()
         }
+        naturebutton = findViewById<ImageButton>(R.id.natureBtn)
+        originalbutton = findViewById<ImageButton>(R.id.originalBtn)
+        notifysound = findViewById<Switch>(R.id.notifySound)
+        var mediaplayer : MediaPlayer = MediaPlayer.create(this, R.raw.alarm)
+        val nature: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.nature)
+        val original: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.original)
+        val wallpaperManager = WallpaperManager.getInstance(baseContext)
 
+        naturebutton.setOnClickListener {
+            wallpaperManager.setBitmap(nature)
+            if (notifysound.isChecked == true) mediaplayer.start()
+            Toast.makeText(this, "배경화면이 풍경으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        originalbutton.setOnClickListener {
+            wallpaperManager.setBitmap(original)
+            if (notifysound.isChecked == true) mediaplayer.start()
+            Toast.makeText(this, "배경화면이 원색으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        // 갤러리
+        gallery = findViewById<TextView>(R.id.gallery)
+        gallery.setOnClickListener {
+            val intent = Intent(this,Gallery::class.java)
+            startActivity(intent)
+        }
 
         logoutbtn.setOnClickListener {
             Toast.makeText(this, "로그아웃",Toast.LENGTH_SHORT).show()
@@ -351,7 +381,6 @@ class Menu : TabActivity() {
                             axisMinimum = (min/10000*0.8f) // 최소값 0
                             granularity = 20f // 50 단위마다 선을 그리려고 설정.
                             setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
-                            //setDrawGridLines(true) //격자 라인 활용
                             setDrawAxisLine(false) // 축 그리기 설정
                             setDrawZeroLine(false)
                             setDrawGridLines(false)
@@ -380,7 +409,6 @@ class Menu : TabActivity() {
                                 R.color.design_default_color_primary_dark
                             ) //라벨 색상
                             textSize = 12f // 텍스트 크기
-                            valueFormatter = MyXAxisFormatter() // X축 라벨값(밑에 표시되는 글자) 바꿔주기 위해 설정
                         }
                         axisRight.isEnabled = false // 오른쪽 Y축을 안보이게 해줌.
                         setTouchEnabled(false) // 그래프 터치해도 아무 변화없게 막음
@@ -442,15 +470,6 @@ class Menu : TabActivity() {
     }
 
 
-    inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("mon", "tue", "wed", "thu", "fri")
-        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            return days.getOrNull(value.toInt() - 1) ?: value.toString()
-        }
-    }
-    inner class Setting : PreferenceActivity() {
-
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
@@ -541,6 +560,3 @@ class Menu : TabActivity() {
     }
 }
 
-private fun <E> ArrayList<E>.add(element: EditText?) {
-
-}

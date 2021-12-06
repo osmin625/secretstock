@@ -335,6 +335,7 @@
                                     android:textStyle="bold" />
 
                                 <Switch
+                                    android:id="@+id/notifySound"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="220dp" />
@@ -369,6 +370,7 @@
                             android:paddingTop="15dp">
 
                             <TextView
+                                android:id="@+id/gallery"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="배경 화면"
