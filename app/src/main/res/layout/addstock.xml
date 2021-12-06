@@ -48,7 +48,7 @@
 
         <EditText
             android:id="@+id/StockName"
-            android:layout_width="wrap_content"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="187dp"
+            android:layout_marginLeft="15dp"
             android:background="#00ff0000"
             android:src="@drawable/dlg_searchbtn" />
     </LinearLayout>
