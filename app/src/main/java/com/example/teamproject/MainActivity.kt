@@ -77,16 +77,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }.addOnFailureListener{
                 Toast.makeText(this, "아이디가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
-
             }
         }
-
         btnSign.setOnClickListener {
             val intent = Intent(this, Regist::class.java)
             startActivity(intent)
         }
-
-
-
     }
 }
