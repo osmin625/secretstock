@@ -231,14 +231,24 @@ class Menu : TabActivity() {
         val wallpaperManager = WallpaperManager.getInstance(baseContext)
         val naturewall= resources.obtainTypedArray(R.array.nature)
         val originwall = resources.obtainTypedArray(R.array.origin)
+        var revenue : Float = (((total - startTotal) * 100 / startTotal).toFloat())
         naturebutton.setOnClickListener {
-            wallpaperManager.setBitmap(nature)
+            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
+            else if (revenue == 0.toFloat()) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
+            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
+            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
             if (notifysound.isChecked == true) mediaplayer.start()
             Toast.makeText(this, "배경화면이 풍경으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         originalbutton.setOnClickListener {
-            wallpaperManager.setBitmap(original)
+            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
+            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
+            else if (revenue == 0.toFloat()) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
+            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
+            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
+
             if (notifysound.isChecked == true) mediaplayer.start()
             Toast.makeText(this, "배경화면이 원색으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
