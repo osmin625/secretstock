@@ -60,7 +60,7 @@ class Regist : AppCompatActivity(){
             var currentStock = ArrayList<Stock>(20)
             var stockChange = ArrayList<Int>(20)
             var date = ArrayList<String>(20)
-            var changeNum :Int = 0
+            var changeNum :Int = 1
             var stockNumber : Int = 0
             startStock.add(Stock())
             currentStock.add(Stock())
