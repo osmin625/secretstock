@@ -233,21 +233,21 @@ class Menu : TabActivity() {
         val originwall = resources.obtainTypedArray(R.array.origin)
         var revenue : Float = (((total - startTotal) * 100 / startTotal).toFloat())
         naturebutton.setOnClickListener {
-            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
-            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
+            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
+            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
             else if (revenue == 0.toFloat()) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
-            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
-            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
+            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
             if (notifysound.isChecked == true) mediaplayer.start()
             Toast.makeText(this, "배경화면이 풍경으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         originalbutton.setOnClickListener {
-            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
-            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
+            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
+            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
             else if (revenue == 0.toFloat()) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
-            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
-            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
+            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
+            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
 
             if (notifysound.isChecked == true) mediaplayer.start()
             Toast.makeText(this, "배경화면이 원색으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
@@ -358,7 +358,7 @@ class Menu : TabActivity() {
                         todayRevenuePer.text = "0%"
                     }
                     else{
-                        todayRevenuePer.text = (((total - startTotal) * 100 / startTotal).toFloat()).toString() + "%"
+                        todayRevenuePer.text = (((total - startTotal).toFloat() * 100 / startTotal)).toString() + "%"
                     }
                     newstockList.add(Listviewitem(StockCode, dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
 
@@ -531,7 +531,7 @@ class Menu : TabActivity() {
                 todayRevenuePer.text = "0%"
             }
             else{
-                todayRevenuePer.text = (((total - startTotal) * 100 / startTotal).toFloat()).toString() + "%"
+                todayRevenuePer.text = (((total - startTotal).toFloat() * 100 / startTotal)).toString() + "%"
             }
         }
         if(resultCode == Activity.RESULT_FIRST_USER){ // 수정했을때
@@ -566,7 +566,7 @@ class Menu : TabActivity() {
             adapter.notifyDataSetChanged()
             Toast.makeText(this, "${stockList[index].stockName}이/가 수정되었습니다.",Toast.LENGTH_SHORT).show()
             todayRevenue.text = (total - startTotal).toString() + "원"
-            todayRevenuePer.text = (((total-startTotal) * 100 / startTotal).toFloat()).toString() + "%"
+            todayRevenuePer.text = (((total - startTotal).toFloat() * 100 / startTotal)).toString() + "%"
         }
     }
 }
