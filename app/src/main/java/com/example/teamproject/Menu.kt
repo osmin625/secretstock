@@ -183,6 +183,7 @@ class Menu : TabActivity() {
                 textSize = 8f //라벨 텍스트 크기
             }
             xAxis.run {
+                isEnabled = false
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
                 granularity = 1f // 1 단위만큼 간격 두기
                 setDrawAxisLine(true) // 축 그림
@@ -369,6 +370,7 @@ class Menu : TabActivity() {
                             textSize = 8f //라벨 텍스트 크기
                         }
                         xAxis.run {
+                            isEnabled = false
                             position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
                             granularity = 1f // 1 단위만큼 간격 두기
                             setDrawAxisLine(true) // 축 그림
