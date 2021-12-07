@@ -65,10 +65,9 @@ class MainActivity : AppCompatActivity() {
                             name, tempId, value, startStock, currentStock, stockChange,date, stockNumber, changeNum
                         )
                         Toast.makeText(this, "${user.getname()}님 환영합니다.", Toast.LENGTH_SHORT).show()
-                        idedt1.setText("")
-                        idedt2.setText("")
                         var intentMenu = Intent(this, Menu::class.java)
                         intentMenu.putExtra("user", user)
+                        intentMenu.putExtra("id",id)
                         startActivity(intentMenu)
 
                     } else {

@@ -39,10 +39,12 @@ import kotlinx.android.synthetic.main.addstock.view.*
 import kotlin.collections.HashMap as HashMap
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import kotlin.concurrent.timer
 
 
 @Suppress("deprecation")
 class Menu : TabActivity() {
+    lateinit var wallpaperIntent: Intent
     lateinit var naturebutton : ImageButton
     lateinit var originalbutton : ImageButton
     lateinit var notifysound : Switch
@@ -73,6 +75,7 @@ class Menu : TabActivity() {
         setContentView(R.layout.activity_menu)
         var intent = intent
         user = intent.getSerializableExtra("user") as User
+        var id = intent.getSerializableExtra("id") as String
         var stockAddBtn = findViewById<Button>(R.id.stockAddBtn)
         var logoutbtn = findViewById<ImageButton>(R.id.logoutbtn)
         var barChart: LineChart = findViewById(R.id.barChart)
@@ -94,7 +97,7 @@ class Menu : TabActivity() {
             todayRevenuePer.text = "0%"
         }
         else{
-            todayRevenuePer.text = (((total - startTotal) * 100 / startTotal).toFloat()).toString() + "%"
+            todayRevenuePer.text = (((total - startTotal).toFloat() * 100 / startTotal)).toString() + "%"
         }
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         email = findViewById(R.id.email_connect)
@@ -231,26 +234,55 @@ class Menu : TabActivity() {
         val wallpaperManager = WallpaperManager.getInstance(baseContext)
         val naturewall= resources.obtainTypedArray(R.array.nature)
         val originwall = resources.obtainTypedArray(R.array.origin)
-        var revenue : Float = (((total - startTotal) * 100 / startTotal).toFloat())
+        //var revenue : Float = (((total - startTotal) * 100 / startTotal).toFloat())
         naturebutton.setOnClickListener {
-            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
-            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
-            else if (revenue == 0.toFloat()) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
-            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
-            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
-            if (notifysound.isChecked == true) mediaplayer.start()
-            Toast.makeText(this, "배경화면이 풍경으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "배경화면 서비스 시작.(풍경)", Toast.LENGTH_SHORT).show()
+            val database2 = FirebaseDatabase.getInstance()
+            val myRef2 = database2.reference
+            var wallchangelist = ArrayList<Int>(0)
+            var wallchangenum : Int = 0
+
+            timer(period = 10000)
+            {
+                myRef2.child("user").child(id).get().addOnSuccessListener{
+                    wallchangelist = it.child("stockChange").value as ArrayList<Int>
+                    wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
+                    var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
+                    Log.i("timer","${revenue}")
+                    if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
+                    else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
+                    else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
+                    else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
+                    else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+                    if (notifysound.isChecked == true) mediaplayer.start()
+                }.addOnFailureListener{
+                }
+
+            }
+
+
+
+
         }
-
         originalbutton.setOnClickListener {
-            if (revenue >= 5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
-            else if (revenue >= 0.5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
-            else if (revenue == 0.toFloat()) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
-            else if (revenue <= -5) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
-            else if (revenue < 0) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
-
-            if (notifysound.isChecked == true) mediaplayer.start()
-            Toast.makeText(this, "배경화면이 원색으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "배경화면 서비스 시작.(원색)", Toast.LENGTH_SHORT).show()
+            val database2 = FirebaseDatabase.getInstance()
+            val myRef2 = database2.reference
+            var wallchangelist = ArrayList<Int>(0)
+            var wallchangenum : Int = 0
+            timer(period = 10000) {
+                myRef2.child("user").child(id).get().addOnSuccessListener{
+                    wallchangelist = it.child("stockChange").value as ArrayList<Int>
+                    wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
+                    var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
+                    if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
+                    else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
+                    else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
+                    else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
+                    else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
+                    if (notifysound.isChecked == true) mediaplayer.start()
+                }.addOnFailureListener{}
+            }
         }
 
         // 갤러리
