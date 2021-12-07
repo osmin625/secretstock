@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.addstock.view.*
 import kotlin.collections.HashMap as HashMap
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.example.teamproject.databinding.ActivityMainBinding
 import kotlin.concurrent.timer
 
 
@@ -65,6 +66,10 @@ class Menu : TabActivity() {
     lateinit var email : TextView
     lateinit var todayRevenue : TextView
     lateinit var todayRevenuePer : TextView
+    lateinit var interval : TextView
+    lateinit var period : TextView
+
+    var time : Long = 60000
     var total : Int = 0
     var startTotal : Int = 0
     var max : Float = 0f
@@ -235,6 +240,28 @@ class Menu : TabActivity() {
         val naturewall= resources.obtainTypedArray(R.array.nature)
         val originwall = resources.obtainTypedArray(R.array.origin)
         //var revenue : Float = (((total - startTotal) * 100 / startTotal).toFloat())
+
+        interval = findViewById<TextView>(R.id.interval)
+        period = findViewById<TextView>(R.id.period)
+        interval.setOnClickListener {
+            val IDialogView = LayoutInflater.from(this).inflate(R.layout.interval, null)
+            var items = arrayOf("1분", "10분", "30분", "1시간", "3시간", "6시간")
+            val IBuilder = AlertDialog.Builder(this)
+                .setView(IDialogView)
+                .setTitle("원하는 시간을 선택하세요")
+                .setItems(items) { dialog, which ->
+                    Toast.makeText(this, "${items[which]} 간격으로 반영됩니다.", Toast.LENGTH_SHORT).show()
+                    if (which == 0) time = 60000
+                    if (which == 1) time = 600000
+                    else if (which == 2) time = 1800000
+                    else if (which == 3) time = 3600000
+                    else if (which == 4) time = 10800000
+                    else time = 21600000
+                    period.setText("${items[which]}")
+                    Log.d("time", time.toString()+"입니다")
+                }
+                .show()
+        }
         naturebutton.setOnClickListener {
             Toast.makeText(this, "배경화면 서비스 시작.(풍경)", Toast.LENGTH_SHORT).show()
             val database2 = FirebaseDatabase.getInstance()
@@ -242,7 +269,7 @@ class Menu : TabActivity() {
             var wallchangelist = ArrayList<Int>(0)
             var wallchangenum : Int = 0
 
-            timer(period = 10000)
+            timer(period = time)
             {
                 myRef2.child("user").child(id).get().addOnSuccessListener{
                     wallchangelist = it.child("stockChange").value as ArrayList<Int>
@@ -252,17 +279,13 @@ class Menu : TabActivity() {
                     if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
                     else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
                     else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
-                    else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
-                    else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+                    else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+                    else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
                     if (notifysound.isChecked == true) mediaplayer.start()
                 }.addOnFailureListener{
                 }
 
             }
-
-
-
-
         }
         originalbutton.setOnClickListener {
             Toast.makeText(this, "배경화면 서비스 시작.(원색)", Toast.LENGTH_SHORT).show()
@@ -270,7 +293,7 @@ class Menu : TabActivity() {
             val myRef2 = database2.reference
             var wallchangelist = ArrayList<Int>(0)
             var wallchangenum : Int = 0
-            timer(period = 10000) {
+            timer(period = time) {
                 myRef2.child("user").child(id).get().addOnSuccessListener{
                     wallchangelist = it.child("stockChange").value as ArrayList<Int>
                     wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
@@ -602,4 +625,3 @@ class Menu : TabActivity() {
         }
     }
 }
-
