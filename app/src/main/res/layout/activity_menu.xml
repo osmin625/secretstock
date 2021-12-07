@@ -282,6 +282,12 @@
                                 android:text="풍경"
                                 android:textColor="#3C3C3C" />
 
+                            <RadioButton
+                                android:id="@+id/natureRdBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="23dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginLeft="99dp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -307,6 +313,12 @@
                                 android:gravity="center"
                                 android:text="원색"
                                 android:textColor="#3C3C3C" />
+                            <RadioButton
+                                android:id="@+id/originalRdBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="23dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginLeft="98dp" />
                         </LinearLayout>
                     </LinearLayout>
 
