@@ -469,7 +469,7 @@ class Menu : TabActivity() {
                     entries.clear()
 
                     for (i in 0..stockChangeNum - 1) {
-                        entries.add(Entry(j, stockChangeList[i].toFloat()))
+                        entries.add(Entry(j, stockChangeList[i]/10000.toFloat()))
                         //Log.i("stockchangeList", "Got value ${stockChangeList[i]}")
                         if(max < stockChangeList[i].toFloat())
                             max = stockChangeList[i].toFloat()
@@ -477,6 +477,7 @@ class Menu : TabActivity() {
                             min = stockChangeList[i].toFloat()
                         j = j + 1
                     }
+
 
 
                     barChart.run {
