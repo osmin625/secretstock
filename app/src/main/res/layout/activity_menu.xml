@@ -211,7 +211,6 @@
                             android:textColor="@color/black"
                             android:textSize="35dp"
                             android:textStyle="bold|italic" />
-
                         <Button
                             android:id="@+id/stockAddBtn"
                             android:layout_width="wrap_content"
@@ -223,7 +222,6 @@
                             android:textAlignment="center"
                             android:textColor="#4c6fff"
                             android:textStyle="bold" />
-
                     </LinearLayout>
 
                     <ListView
@@ -232,16 +230,13 @@
                         android:layout_height="540dp"
                         android:divider="#ffffff"
                         android:dividerHeight="4dp" />
-
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/Wallpaper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -262,7 +257,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
                             <ImageButton
                                 android:id="@+id/natureBtn"
                                 android:layout_width="wrap_content"
@@ -270,7 +264,6 @@
                                 android:layout_marginLeft="35dp"
                                 android:background="#00ff0000"
                                 android:src="@drawable/nature" />
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -281,20 +274,12 @@
                                 android:gravity="center"
                                 android:text="풍경"
                                 android:textColor="#3C3C3C" />
-
-                            <RadioButton
-                                android:id="@+id/natureRdBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="23dp"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="99dp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
                             <ImageButton
                                 android:id="@+id/originalBtn"
                                 android:layout_width="wrap_content"
@@ -313,12 +298,6 @@
                                 android:gravity="center"
                                 android:text="원색"
                                 android:textColor="#3C3C3C" />
-                            <RadioButton
-                                android:id="@+id/originalRdBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="23dp"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="98dp" />
                         </LinearLayout>
                     </LinearLayout>
 
