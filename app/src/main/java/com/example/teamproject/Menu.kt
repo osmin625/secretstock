@@ -76,6 +76,7 @@ class Menu : TabActivity() {
     var max : Float = 0f
     var min : Float = 1000000000f
     var newstockList = mutableListOf<Listviewitem>()
+    var wallflag = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -247,6 +248,10 @@ class Menu : TabActivity() {
         val naturewall= resources.obtainTypedArray(R.array.nature)
         val originwall = resources.obtainTypedArray(R.array.origin)
         //var revenue : Float = (((total - startTotal) * 100 / startTotal).toFloat())
+        val database2 = FirebaseDatabase.getInstance()
+        val myRef2 = database2.reference
+        var wallchangelist = ArrayList<Int>(0)
+        var wallchangenum : Int = 0
 
         interval = findViewById<TextView>(R.id.interval)
         period = findViewById<TextView>(R.id.period)
@@ -258,66 +263,91 @@ class Menu : TabActivity() {
                 .setTitle("원하는 시간을 선택하세요")
                 .setItems(items) { dialog, which ->
                     Toast.makeText(this, "${items[which]} 간격으로 반영됩니다.", Toast.LENGTH_SHORT).show()
-                    if (which == 0) time = 60000
-                    if (which == 1) time = 600000
+                    if (which == 0) time = 10000
+                    else if (which == 1) time = 60000
                     else if (which == 2) time = 1800000
                     else if (which == 3) time = 3600000
                     else if (which == 4) time = 10800000
-                    else time = 21600000
+                    else if (which == 5) time = 21600000
                     period.setText("${items[which]}")
                     Log.d("time", time.toString()+"입니다")
+                    timer(period = time)
+                    {
+                        var wallchangelist = ArrayList<Int>(0)
+                        var wallchangenum : Int = 0
+                        myRef2.child("user").child(id).get().addOnSuccessListener{
+                            wallchangelist = it.child("stockChange").value as ArrayList<Int>
+                            wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
+                            var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
+                            if(wallchangenum > 2) {
+                                revenue = ((wallchangelist[wallchangenum - 1].toFloat() - wallchangelist[wallchangenum - 2].toFloat()) / wallchangelist[wallchangenum - 2].toFloat() * 100)
+                            }
+                            else{
+                                revenue = 0f
+                            }
+                            Log.i("timer","${revenue}")
+                            if (wallflag == 0) {
+                                if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
+                                else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
+                                else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
+                                else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+                                else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
+                                if (notifysound.isChecked == true) mediaplayer.start()
+                            }
+                            else{
+                                if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
+                                else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
+                                else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
+                                else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
+                                else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
+                                if (notifysound.isChecked == true) mediaplayer.start()
+                            }
+                        }.addOnFailureListener{
+                        }
+                    }
                 }
                 .show()
         }
         naturebutton.setOnClickListener {
             Toast.makeText(this, "배경화면 서비스 시작.(풍경)", Toast.LENGTH_SHORT).show()
-            val database2 = FirebaseDatabase.getInstance()
-            val myRef2 = database2.reference
-            var wallchangelist = ArrayList<Int>(0)
-            var wallchangenum : Int = 0
-
-            timer(period = time)
-            {
-                myRef2.child("user").child(id).get().addOnSuccessListener{
-                    wallchangelist = it.child("stockChange").value as ArrayList<Int>
-                    wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
-                    var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
-                    Log.i("timer","${revenue}")
-                    if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
-                    else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
-                    else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
-                    else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
-                    else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
-                    if (notifysound.isChecked == true) mediaplayer.start()
-                }.addOnFailureListener{
+            wallflag = 0
+            myRef2.child("user").child(id).get().addOnSuccessListener{
+                wallchangelist = it.child("stockChange").value as ArrayList<Int>
+                wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
+                var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
+                if(wallchangenum > 2) {
+                    revenue = ((wallchangelist[wallchangenum - 1].toFloat() - wallchangelist[wallchangenum - 2].toFloat()) / wallchangelist[wallchangenum - 2].toFloat() * 100)
                 }
-
+                else{
+                    revenue = 0f
+                }
+                if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature0))
+                else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature1))
+                else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature2))
+                else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature4))
+                else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.nature3))
+                if (notifysound.isChecked == true) mediaplayer.start()
             }
         }
         originalbutton.setOnClickListener {
             Toast.makeText(this, "배경화면 서비스 시작.(원색)", Toast.LENGTH_SHORT).show()
-            val database2 = FirebaseDatabase.getInstance()
-            val myRef2 = database2.reference
-            var wallchangelist = ArrayList<Int>(0)
-            var wallchangenum : Int = 0
-            var revenue : Float
-            timer(period = time) {
-                myRef2.child("user").child(id).get().addOnSuccessListener{
-                    wallchangelist = it.child("stockChange").value as ArrayList<Int>
-                    wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
-                    if(wallchangenum > 2) {
-                        revenue = ((wallchangelist[wallchangenum - 1].toFloat() - wallchangelist[wallchangenum - 2].toFloat()) / wallchangelist[wallchangenum - 2].toFloat() * 100)
-                    }
-                    else{
-                        revenue = 0f
-                    }
-                    if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
-                    else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
-                    else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
-                    else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
-                    else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
-                    if (notifysound.isChecked == true) mediaplayer.start()
-                }.addOnFailureListener{}
+            wallflag = 1
+            myRef2.child("user").child(id).get().addOnSuccessListener{
+                wallchangelist = it.child("stockChange").value as ArrayList<Int>
+                wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
+                var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
+                if(wallchangenum > 2) {
+                    revenue = ((wallchangelist[wallchangenum - 1].toFloat() - wallchangelist[wallchangenum - 2].toFloat()) / wallchangelist[wallchangenum - 2].toFloat() * 100)
+                }
+                else{
+                    revenue = 0f
+                }
+                if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
+                else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
+                else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
+                else if (revenue <= -5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original4))
+                else if (revenue < 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original3))
+                if (notifysound.isChecked == true) mediaplayer.start()
             }
         }
 

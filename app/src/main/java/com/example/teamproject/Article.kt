@@ -110,13 +110,6 @@ class Article : AppCompatActivity() {
             }
             dlg.show()
         }
-
-        //val doc = Jsoup.connect(url).get()
-        //val title = doc.title()
-        //val links = doc.select("a[href]")
-        //필요한 자료만 - 오늘의 스포츠 NoW 목록을 가져오자. HTML  태그등을 분석해서 무엇을 가져 올지 결정해야 한다.
-        //val headline = doc.select("div.NewsList_listNews__1X8w8 li div a div")
-
     }
 }
 
