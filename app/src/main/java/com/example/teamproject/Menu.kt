@@ -72,6 +72,7 @@ class Menu : TabActivity() {
     var time : Long = 60000
     var total : Int = 0
     var startTotal : Int = 0
+    var prevTotal : Int = 0
     var max : Float = 0f
     var min : Float = 1000000000f
     var newstockList = mutableListOf<Listviewitem>()
@@ -93,16 +94,22 @@ class Menu : TabActivity() {
         stockChangeList = user.stockChange
         total = stockChangeList[stockChangeNum-1]
         startTotal = stockChangeList[0]
+        if(stockChangeNum > 2){
+            prevTotal =stockChangeList[stockChangeNum - 2]
+        }
+        else{
+            prevTotal = stockChangeList[0]
+        }
         stockList = user.getStock()
         startList = user.startStock
         date = user.date
         tempStock = Stock()
         todayRevenue.text = (total - startTotal).toString() + "원"
-        if(startTotal == 0) {
+        if(prevTotal == 0) {
             todayRevenuePer.text = "0%"
         }
         else{
-            todayRevenuePer.text = String.format("%.2f",(((total - startTotal).toFloat() * 100 / startTotal))) + "%"
+            todayRevenuePer.text = String.format("%.2f",(((total - prevTotal).toFloat() * 100 / prevTotal))) + "%"
         }
         stockListView = findViewById<ListView>(R.id.stockList) as ListView
         email = findViewById(R.id.email_connect)
@@ -293,11 +300,17 @@ class Menu : TabActivity() {
             val myRef2 = database2.reference
             var wallchangelist = ArrayList<Int>(0)
             var wallchangenum : Int = 0
+            var revenue : Float
             timer(period = time) {
                 myRef2.child("user").child(id).get().addOnSuccessListener{
                     wallchangelist = it.child("stockChange").value as ArrayList<Int>
                     wallchangenum = Integer.parseInt(it.child("changeNum").value.toString())
-                    var revenue : Float = ((wallchangelist[wallchangenum-1].toFloat() - wallchangelist[wallchangenum-2].toFloat())/wallchangelist[wallchangenum-2].toFloat()*100)
+                    if(wallchangenum > 2) {
+                        revenue = ((wallchangelist[wallchangenum - 1].toFloat() - wallchangelist[wallchangenum - 2].toFloat()) / wallchangelist[wallchangenum - 2].toFloat() * 100)
+                    }
+                    else{
+                        revenue = 0f
+                    }
                     if (revenue >= 5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original))
                     else if (revenue >= 0.5f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original1))
                     else if (revenue == 0f) wallpaperManager.setBitmap(BitmapFactory.decodeResource(resources, R.drawable.original2))
@@ -408,12 +421,13 @@ class Menu : TabActivity() {
                     myMoney.text = total.toString() + "원"
                     userRef.child("user").child(user.id).child("stockChange").setValue(stockChangeList)
                     Toast.makeText(this, "${tempStock.stockName}이/가 입력되었습니다.",Toast.LENGTH_SHORT).show()
-                    todayRevenue.text = (total - startTotal).toString() + "원"
-                    if(startTotal == 0) {
+                    prevTotal += stockSum
+                    todayRevenue.text = (total - prevTotal).toString() + "원"
+                    if(prevTotal == 0) {
                         todayRevenuePer.text = "0%"
                     }
                     else{
-                        todayRevenuePer.text = String.format("%.2f",(((total - startTotal).toFloat() * 100 / startTotal))) + "%"
+                        todayRevenuePer.text = String.format("%.2f",(((total - prevTotal).toFloat() * 100 / prevTotal))) + "%"
                     }
                     newstockList.add(Listviewitem(StockCode, dlgStockName.text.toString(), stockSum / Integer.parseInt(dlgStockCount.text.toString()), Integer.parseInt(dlgStockCount.text.toString())))
 
@@ -581,12 +595,13 @@ class Menu : TabActivity() {
             userRef.child("changeNum").setValue(2)
             userRef.child("date").setValue(newDate)
             Toast.makeText(this, "${stockName}이/가 삭제되었습니다.",Toast.LENGTH_SHORT).show()
-            todayRevenue.text = (total - startTotal).toString() + "원"
-            if(startTotal == 0) {
+            prevTotal = startTotal
+            todayRevenue.text = (total - prevTotal).toString() + "원"
+            if(prevTotal == 0) {
                 todayRevenuePer.text = "0%"
             }
             else{
-                todayRevenuePer.text = String.format("%.2f",(((total - startTotal).toFloat() * 100 / startTotal))) + "%"
+                todayRevenuePer.text = String.format("%.2f",(((total - prevTotal).toFloat() * 100 / prevTotal))) + "%"
             }
         }
         if(resultCode == Activity.RESULT_FIRST_USER){ // 수정했을때
@@ -620,8 +635,14 @@ class Menu : TabActivity() {
             newstockList.set(index, Listviewitem(stockList[index].stockCode,stockList[index].stockName, stockList[index].stockPrice / stockList[index].stockNum, stockList[index].stockNum))
             adapter.notifyDataSetChanged()
             Toast.makeText(this, "${stockList[index].stockName}이/가 수정되었습니다.",Toast.LENGTH_SHORT).show()
-            todayRevenue.text = (total - startTotal).toString() + "원"
-            todayRevenuePer.text = String.format("%.2f",(((total - startTotal).toFloat() * 100 / startTotal))) + "%"
+            prevTotal = startTotal
+            todayRevenue.text = (total - prevTotal).toString() + "원"
+            if(prevTotal == 0) {
+                todayRevenuePer.text = "0%"
+            }
+            else{
+                todayRevenuePer.text = String.format("%.2f",(((total - prevTotal).toFloat() * 100 / prevTotal))) + "%"
+            }
         }
     }
 }
