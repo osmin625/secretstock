@@ -1,3 +1,4 @@
+![fast_full](https://user-images.githubusercontent.com/46878927/145513885-6d3611eb-6e27-42e6-b1da-86d23b30a279.gif)
 - **제품 설명**
     - 주가 은밀히 알려주는 기능
         - 배경화면은 커스텀 가능 (프리미엄 기능)
