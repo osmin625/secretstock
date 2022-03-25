@@ -1,5 +1,7 @@
 ![fast_full](https://user-images.githubusercontent.com/46878927/145513885-6d3611eb-6e27-42e6-b1da-86d23b30a279.gif)
 ![wallpaper_fast](https://user-images.githubusercontent.com/46878927/145514002-14f60ff4-e493-490a-935f-27e4c10dc38d.gif)
+*위 영상은 주가의 변동에 따른 배경화면 변화를 보여주기 위해 DB에 저장된 주가정보를 직접 수정하여 연출했습니다.
+
 - **제품 설명**
     - 주가 은밀히 알려주는 기능
         - 배경화면은 커스텀 가능 (프리미엄 기능)
